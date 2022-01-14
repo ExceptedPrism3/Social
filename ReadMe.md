@@ -1,0 +1,39 @@
+# Social
+
+![Updated Badge](https://badges.pufler.dev/updated/ExceptedPrism3/Social)
+![Version](https://img.shields.io/github/v/release/ExceptedPrism3/Social)
+![Downloads](https://img.shields.io/github/downloads/ExceptedPrism3/Social/total)
+![Issues](https://img.shields.io/github/issues/ExceptedPrism3/Social)
+[![Discord](https://img.shields.io/discord/850407951629287424)](https://discord.gg/MfR5mcpVfX)
+
+A Plugin that supports multiple server versions (Bukkit, BungeCord, WaterFall, Velocity, etc...)
+
+This plugin can be found on [Spigot](https://www.spigotmc.org/resources/logger.93562) & [MC-Market](https://www.mc-market.org/resources/20400/).
+
+If support is needed or a suggesting that needs to be implemented, feel free to ask on the [Discord](https://discord.gg/MfR5mcpVfX).
+
+# About the Plugin
+Social media corners for your Server, with some cool features.
+
+### It offers some commands like
+
+- /Facebook
+- /Discord
+- /Youtube
+- /Twitch
+- /Instagram
+- /Store
+- /Website
+
+### The plugin can be installed across multiple server versions.
+Such as:
+- Spigot
+- Paper
+- Purpur
+- BungeeCord
+- WaterFall
+- FlameCord
+- Velocity
+- ...
+
+

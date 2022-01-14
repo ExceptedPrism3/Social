@@ -1,0 +1,55 @@
+# /////////////////////////////////////////////////////////////
+# /                                                           /
+# /                      Social Plugin                        /
+# /                                                           /
+# /                    [ Proxy Version ]                      /
+# /                                                           /
+# /////////////////////////////////////////////////////////////
+#
+# Thank you for using Social Plugin! If you are experiencing any issues
+# or have any suggestions / features you want to be implemented into the plugin
+# feel free to join the support Discord Server!
+#
+# Spigot: Prism3
+# Discord: Prism3#9371 | ID: 403667971089760257
+# Discord Server: https://discord.gg/MfR5mcpVfX
+
+
+# Social Features
+Social:
+  Website: true
+  Youtube: true
+  Facebook: true
+  Twitch: true
+  Discord: true
+  Instagram: true
+  Store: true
+
+# Social Links
+Links:
+  Website: "&f&lWebsite.com"
+  Youtube: "&c&lYoutube.com"
+  Facebook: "&b&lFacebook.com"
+  Twitch: "&5&lTwitch.com"
+  Discord: "&9&lDiscord.gg"
+  Instagram: "&d&lInstagram.com"
+  Store: "&6&lStore.com"
+
+Messages:
+  No-Permission: "&cYou do not have permission to use this command!"
+  Invalid-Syntax: "&cInvalid Syntax."
+  Reload: "&a&lSocial has been reloaded!"
+  Not-Available: "&cThis social media is currently unavailable."
+  Social-Help:
+    - '&8&m----+------------{&r &b&lSocialMedia &r&8&m}------------+----'
+    - ''
+    - '&b/website &7- Shows the Website Link.'
+    - '&b/youtube &7- Shows the Youtube Link.'
+    - '&b/facebook &7- Shows the Facebook Link.'
+    - '&b/twitch &7- Shows the Twitch Link.'
+    - '&b/discord &7- Shows the Discord Link.'
+    - '&b/instagram &7- Shows the Instagram Link.'
+    - '&b/store &7- Shows the Store Link.'
+    - '&b/reload &7- To reload the Plugin Config.'
+    - ''
+    - '&8&m----+------------------------------------------+----'

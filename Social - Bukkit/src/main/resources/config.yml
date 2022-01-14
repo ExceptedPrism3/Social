@@ -1,0 +1,68 @@
+# /////////////////////////////////////////////////////////////
+# /                                                           /
+# /                      Social Plugin                        /
+# /                                                           /
+# /                    [ Bukkit Version ]                     /
+# /                                                           /
+# /////////////////////////////////////////////////////////////
+#
+# Thank you for using Social Plugin! If you are experiencing any issues
+# or have any suggestions / features you want to be implemented into the plugin
+# feel free to join the support Discord Server!
+#
+# Spigot: Prism3
+# Discord: Prism3#9371 | ID: 403667971089760257
+# Discord Server: https://discord.gg/MfR5mcpVfX
+
+
+# Social GUI Feature
+# The Size can only be one of the following: 9 / 18 / 27 / 36 / 45 / 54
+Social:
+  Disable-Menu: false
+  Title: '&6&lSocialMedia Corners'
+  Size: 45
+
+# Social Media Links & Configs
+Website:
+  Disabled: false
+  Link: '&f&lWebsite.com'
+  Slot: 10
+
+Youtube:
+  Disabled: false
+  Link: '&c&lYoutube.com'
+  Slot: 12
+
+Facebook:
+  Disabled: false
+  Link: '&b&lFacebook.com'
+  Slot: 14
+
+Twitch:
+  Disabled: false
+  Link: '&d&lTwitch.com'
+  Slot: 16
+
+Discord:
+  Disabled: false
+  Link: '&9&lDiscord.com'
+  Slot: 28
+
+Instagram:
+  Disabled: false
+  Link: '&5&lInstagram.com'
+  Slot: 34
+
+Store:
+  Disabled: false
+  Link: '&6&lStore.com'
+  Slot: 31
+
+
+Messages:
+  No-Permission: '&cYou do not have permission to run this command.'
+  Reload-Message: '&aConfig Reloaded.'
+  Invalid-Syntax: '&cInvalid Syntax!'
+  Available: '&aAvailable!'
+  Not-Available: '&4Not available!'
+  Feature-Disabled: '&cThis feature is disabled!'

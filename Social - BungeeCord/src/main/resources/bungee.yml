@@ -1,0 +1,26 @@
+name: Social-BungeeCord
+version: '${project.version}'
+main: me.prism3.socialbungee.Main
+description: Social media corners for your Server.
+author: Prism3
+website: prism3.me
+commands:
+  social:
+    description: "Shows the Help message."
+  website:
+    description: "Shows the Website Link."
+  youtube:
+    description: "Shows the Youtube Link."
+  facebook:
+    description: "Shows the Facebook Link."
+  twitch:
+    description: "Shows the Twitch Link."
+  discord:
+    description: "Shows the Discord Link."
+  instagram:
+    description: "Shows the Instagram Link."
+  store:
+    description: "Shows the Store Link."
+permissions:
+  socialproxy.reload:
+    description: Allows to reload the Plugin.

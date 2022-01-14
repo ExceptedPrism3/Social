@@ -1,0 +1,37 @@
+name: Social
+version: ${project.version}
+api-version: 1.13
+main: me.prism3.socialbukkit.Main
+authors: [ Prism3 ]
+description: Social media corners for your server.
+website: prism3.me
+commands:
+    Social:
+        description: "Open social media Menu."
+    website:
+        description: "Shows the Website Link."
+    youtube:
+        description: "Shows the Youtube Link."
+        aliases:
+            - yt
+    facebook:
+        description: "Shows the Facebook Link."
+        aliases:
+            - fb
+    twitch:
+        description: "Shows the Twitch Link."
+    discord:
+        description: "Shows the Discord Link."
+    instagram:
+        description: "Shows the Instagram Link."
+        aliases:
+            - insta
+    store:
+        description: "Shows the Store Link."
+permissions:
+    social.use:
+        description: Opens the Social Media Menu.
+        default: true
+    social.reload:
+        description: Reload the Plugin.
+        default: op
