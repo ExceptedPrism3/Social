@@ -1,34 +1,32 @@
 package me.prism3.socialbukkit.onCommands;
 
-import me.prism3.socialbukkit.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import java.util.Objects;
+import static me.prism3.socialbukkit.Utils.Data.*;
 
 public class onYoutube implements CommandExecutor {
-
-    private final Main main = Main.getInstance();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
 
-        if (sender.hasPermission("social.use")) {
+        if (sender.hasPermission(socialUse)) {
 
-            if (!main.getConfig().getBoolean("Youtube.Disabled")) {
+            if (!isYoutube) {
 
-                sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Youtube.Link")).replaceAll("&", "§"));
+                sender.sendMessage(youtubeLink);
 
             } else {
 
-                sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
+                sender.sendMessage(messageNotAvailable);
+                return false;
 
             }
-
         } else {
 
-            sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.No-Permission")).replaceAll("&", "§"));
+            sender.sendMessage(messageNoPermission);
+            return false;
 
         }
         return true;

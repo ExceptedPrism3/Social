@@ -7,51 +7,37 @@ import me.prism3.socialvelocity.Main;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import static me.prism3.socialvelocity.Utils.Data.*;
 
 public class OnSocial implements SimpleCommand {
+
+    private final Main main = Main.getInstance();
 
     @Override
     public void execute(Invocation invocation) {
 
-        Main main = Main.getInstance();
-        CommandSource sender = invocation.source();
-        String[] args = invocation.arguments();
+        final CommandSource sender = invocation.source();
+        final String[] args = invocation.arguments();
 
-        if (sender.hasPermission("socialproxy.reload")) {
+        if (sender.hasPermission(socialProxyReload)) {
 
             if (args.length == 0 || (args.length == 1 && args[0].equalsIgnoreCase("help"))) {
 
                 if (sender instanceof Player) {
 
-                    List<String> lines = main.getConfig().getStringList("Messages.Social-Help");
+                    final StringBuilder SM = new StringBuilder();
 
-                    StringBuilder SM = new StringBuilder();
-
-                    for (String line : lines)
-                        SM.append(line).append('\n');
+                    for (String line : helpMessages) SM.append(line).append('\n');
 
                     sender.sendMessage(Identity.nil(), Component.text(SM.toString()));
 
-                } else {
-
-                   main.getLogger().info("Thank you for using the Social Plugin!");
-                }
-
+                } else this.main.getLogger().info("Thank you for using the Social Plugin!");
             } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
 
-                main.getConfig().reload();
-                sender.sendMessage(Identity.nil(), Component.text(main.getConfig().getString("Messages.Reload")));
+                this.main.getConfig().reload();
+                sender.sendMessage(Identity.nil(), Component.text(messageReload));
 
-            } else {
-
-                sender.sendMessage(Identity.nil(), Component.text(main.getConfig().getString("Messages.Invalid-Syntax")));
-
-            }
-        } else {
-
-            sender.sendMessage(Identity.nil(), Component.text(main.getConfig().getString("Messages.No-Permission")));
-
-        }
+            } else sender.sendMessage(Identity.nil(), Component.text(invalidSyntax));
+        } else sender.sendMessage(Identity.nil(), Component.text(messageNoPermission));
     }
 }

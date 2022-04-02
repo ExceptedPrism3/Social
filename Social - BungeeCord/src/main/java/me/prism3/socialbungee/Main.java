@@ -2,6 +2,7 @@ package me.prism3.socialbungee;
 
 import me.prism3.socialbungee.Commands.*;
 import me.prism3.socialbungee.Utils.ConfigManager;
+import me.prism3.socialbungee.Utils.Data;
 import me.prism3.socialbungee.Utils.Metrics;
 import me.prism3.socialbungee.Utils.UpdateChecker;
 import net.md_5.bungee.api.ChatColor;
@@ -11,51 +12,53 @@ public final class Main extends Plugin {
 
     private static Main instance;
 
-    private static ConfigManager config;
+    private ConfigManager config;
 
     @Override
     public void onEnable() {
 
         instance = this;
 
-        config = new ConfigManager();
-        config.init();
+        this.config = new ConfigManager();
+        this.config.init();
 
-        getProxy().getPluginManager().registerCommand(this, new OnSocial());
-        getProxy().getPluginManager().registerCommand(this, new OnDiscord());
-        getProxy().getPluginManager().registerCommand(this, new OnFacebook());
-        getProxy().getPluginManager().registerCommand(this, new OnWebsite());
-        getProxy().getPluginManager().registerCommand(this, new OnYoutube());
-        getProxy().getPluginManager().registerCommand(this, new OnTwitch());
-        getProxy().getPluginManager().registerCommand(this, new OnInstagram());
-        getProxy().getPluginManager().registerCommand(this, new OnStore());
+        this.initializeData(new Data());
 
-        //bstats
+        this.getProxy().getPluginManager().registerCommand(this, new OnSocial());
+        this.getProxy().getPluginManager().registerCommand(this, new OnDiscord());
+        this.getProxy().getPluginManager().registerCommand(this, new OnFacebook());
+        this.getProxy().getPluginManager().registerCommand(this, new OnWebsite());
+        this.getProxy().getPluginManager().registerCommand(this, new OnYoutube());
+        this.getProxy().getPluginManager().registerCommand(this, new OnTwitch());
+        this.getProxy().getPluginManager().registerCommand(this, new OnInstagram());
+        this.getProxy().getPluginManager().registerCommand(this, new OnStore());
+
+        // bStats
 
         new Metrics(this, 11779);
 
-        //Update Checker
+        // Update Checker
 
         new UpdateChecker(this, 93562).getLatestVersion(version -> {
 
             if(this.getDescription().getVersion().equalsIgnoreCase(version)) {
 
-                getLogger().info(ChatColor.GREEN + "Plugin is up to date!");
+                this.getLogger().info(ChatColor.GREEN + "Plugin is up to date!");
 
             } else {
 
-                getLogger().info(ChatColor.GOLD + "Plugin has a new Update! Current version " + ChatColor.RED + version + ChatColor.GOLD + " and the newest " + ChatColor.GREEN + this.getDescription().getVersion());
+                this.getLogger().info(ChatColor.GOLD + "Plugin has a new Update! Current version " + ChatColor.RED + version + ChatColor.GOLD + " and the newest " + ChatColor.GREEN + this.getDescription().getVersion());
 
             }
         });
 
-        getLogger().info("Has been loaded!");
+        this.getLogger().info("Has been loaded!");
     }
 
     @Override
     public void onDisable() {
 
-        getLogger().info("Has been unloaded!");
+        this.getLogger().info("Has been unloaded!");
 
     }
 
@@ -63,7 +66,16 @@ public final class Main extends Plugin {
         return instance;
     }
 
-    public static ConfigManager getConfig() {
-        return config;
+    public ConfigManager getConfig() {
+        return this.config;
+    }
+
+    private void initializeData(Data data){
+
+        data.initializeStrings();
+        data.initializeListOfStrings();
+        data.initializeBooleans();
+        data.initializePermissionStrings();
+
     }
 }

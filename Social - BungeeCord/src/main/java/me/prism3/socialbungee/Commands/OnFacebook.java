@@ -1,32 +1,24 @@
 package me.prism3.socialbungee.Commands;
 
-import me.prism3.socialbungee.Main;
-import me.prism3.socialbungee.Utils.ConfigManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Command;
 
+import static me.prism3.socialbungee.Utils.Data.*;
+
 public class OnFacebook extends Command {
 
     public OnFacebook(){
-
         super("facebook");
-
     }
 
     @Override
     public void execute(CommandSender sender, String[] strings) {
 
-        ConfigManager config = Main.getConfig();
+        if (isFacebook) {
 
-        if (config.getBoolean("Social.Facebook")) {
+            sender.sendMessage(new TextComponent(facebookLink));
 
-            sender.sendMessage(new TextComponent(config.getString("Links.Facebook")));
-
-        } else {
-
-            sender.sendMessage(new TextComponent(config.getString("Messages.Not-Available")));
-
-        }
+        } else sender.sendMessage(new TextComponent(messageNotAvailable));
     }
 }

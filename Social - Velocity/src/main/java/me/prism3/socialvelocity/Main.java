@@ -8,12 +8,14 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import me.prism3.socialvelocity.Commands.*;
-import me.prism3.socialvelocity.Utils.Bstats;
 import me.prism3.socialvelocity.Utils.ConfigManager;
+import me.prism3.socialvelocity.Utils.Data;
 import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
+
+import static me.prism3.socialvelocity.Utils.Data.bStats;
 
 @Plugin(
         id = "social-velocity",
@@ -50,37 +52,48 @@ public class Main {
 
         instance = this;
 
-        config = new ConfigManager();
+        this.config = new ConfigManager();
 
         new ConfigManager();
 
-        // bstats
-        metricsFactory.make(this, Bstats.pluginID);
+        this.initializeData(new Data());
 
-        server.getCommandManager().register("social", new OnSocial());
-        server.getCommandManager().register("discord", new OnDiscord());
-        server.getCommandManager().register("facebook", new OnFacebook(), "fb");
-        server.getCommandManager().register("instagram", new OnInstagram());
-        server.getCommandManager().register("store", new OnStore());
-        server.getCommandManager().register("twitch", new OnTwitch());
-        server.getCommandManager().register("website", new OnWebsite());
-        server.getCommandManager().register("youtube", new OnYoutube(), "yt");
+        // bStats
+        this.metricsFactory.make(this, bStats);
 
-        logger.info("Plugin loaded");
+        this.server.getCommandManager().register("social", new OnSocial());
+        this.server.getCommandManager().register("discord", new OnDiscord());
+        this.server.getCommandManager().register("facebook", new OnFacebook(), "fb");
+        this.server.getCommandManager().register("instagram", new OnInstagram());
+        this.server.getCommandManager().register("store", new OnStore());
+        this.server.getCommandManager().register("twitch", new OnTwitch());
+        this.server.getCommandManager().register("website", new OnWebsite());
+        this.server.getCommandManager().register("youtube", new OnYoutube(), "yt");
+
+        this.logger.info("Plugin loaded");
 
     }
 
     @Subscribe
     public void onDisable(ProxyShutdownEvent event){
-
-        logger.info("Plugin unloaded");
+        this.logger.info("Plugin unloaded");
     }
 
     public static Main getInstance() { return instance; }
 
-    public Logger getLogger(){ return logger; }
+    public Logger getLogger(){ return this.logger; }
 
-    public Path getFolder() { return folder; }
+    public Path getFolder() { return this.folder; }
 
-    public ConfigManager getConfig() { return config; }
+    public ConfigManager getConfig() { return this.config; }
+
+    private void initializeData(Data data){
+
+        data.initializeStrings();
+        data.initializeIntegers();
+        data.initializeListOfStrings();
+        data.initializeBooleans();
+        data.initializePermissionStrings();
+
+    }
 }

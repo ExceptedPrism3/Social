@@ -36,13 +36,13 @@ public class ConfigManager {
     }
 
     public boolean getBoolean(String key) {
-        return !this.config.getBoolean(key);
+        return this.config.getBoolean(key);
     }
 
     public List<String> getStringList(String key) {
 
-        List<String> list = this.config.getStringList(key);
-        List<String> avail = new ArrayList<>();
+        final List<String> list = this.config.getStringList(key);
+        final List<String> avail = new ArrayList<>();
 
         for (String str : list)
 
@@ -61,7 +61,7 @@ public class ConfigManager {
 
             Main.getInstance().getDataFolder().mkdir();
 
-        File file = getFile();
+        final File file = getFile();
 
         if (!file.exists()) {
 
@@ -69,9 +69,9 @@ public class ConfigManager {
 
                 file.createNewFile();
 
-                try (InputStream is = Main.getInstance().getResourceAsStream("config - Bungee.yml")) {
+                try (final InputStream is = Main.getInstance().getResourceAsStream("config - Bungee.yml")) {
 
-                    OutputStream os = new FileOutputStream(file);
+                    final OutputStream os = new FileOutputStream(file);
                     ByteStreams.copy(is, os);
                     os.close();
 

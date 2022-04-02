@@ -2,11 +2,14 @@ package me.prism3.socialbukkit;
 
 import de.jeff_media.updatechecker.UpdateChecker;
 import me.prism3.socialbukkit.Events.ClickEvent;
+import me.prism3.socialbukkit.Utils.Data;
 import me.prism3.socialbukkit.Utils.Metrics;
 import me.prism3.socialbukkit.onCommands.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
+
+import static me.prism3.socialbukkit.Utils.Data.resourceID;
 
 public class Main extends JavaPlugin {
 
@@ -17,43 +20,54 @@ public class Main extends JavaPlugin {
 
         instance = this;
 
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
+        this.getConfig().options().copyDefaults();
+        this.saveDefaultConfig();
 
-        getServer().getPluginManager().registerEvents(new ClickEvent(), this);
+        this.initializeData(new Data());
 
-        Objects.requireNonNull(getCommand("social")).setExecutor(new onSocial());
-        Objects.requireNonNull(getCommand("website")).setExecutor(new onWebsite());
-        Objects.requireNonNull(getCommand("youtube")).setExecutor(new onYoutube());
-        Objects.requireNonNull(getCommand("facebook")).setExecutor(new onFacebook());
-        Objects.requireNonNull(getCommand("twitch")).setExecutor(new onTwitch());
-        Objects.requireNonNull(getCommand("discord")).setExecutor(new onDiscord());
-        Objects.requireNonNull(getCommand("instagram")).setExecutor(new onInstagram());
-        Objects.requireNonNull(getCommand("store")).setExecutor(new onStore());
+        this.getServer().getPluginManager().registerEvents(new ClickEvent(), this);
 
-        //bstats
+        Objects.requireNonNull(this.getCommand("social")).setExecutor(new onSocial());
+        Objects.requireNonNull(this.getCommand("website")).setExecutor(new onWebsite());
+        Objects.requireNonNull(this.getCommand("youtube")).setExecutor(new onYoutube());
+        Objects.requireNonNull(this.getCommand("facebook")).setExecutor(new onFacebook());
+        Objects.requireNonNull(this.getCommand("twitch")).setExecutor(new onTwitch());
+        Objects.requireNonNull(this.getCommand("discord")).setExecutor(new onDiscord());
+        Objects.requireNonNull(this.getCommand("instagram")).setExecutor(new onInstagram());
+        Objects.requireNonNull(this.getCommand("store")).setExecutor(new onStore());
+
+        // bStats
         new Metrics(this, 11779);
 
-        //Update Checker
-        int resource_ID = 93562;
-        UpdateChecker.init(this, resource_ID)
+        // Update Checker
+        UpdateChecker.init(this, resourceID)
                 .checkEveryXHours(2)
-                .setChangelogLink(resource_ID)
+                .setChangelogLink(resourceID)
                 .setNotifyOpsOnJoin(true)
                 .checkNow();
 
-        getLogger().info("Plugin loaded!");
+        this.getLogger().info("Plugin loaded!");
 
     }
 
     @Override
     public void onDisable() {
 
-        getLogger().info("Plugin unloaded!");
+        this.getLogger().info("Plugin unloaded!");
 
     }
 
     public static Main getInstance() {
         return instance;
+    }
+
+    private void initializeData(Data data){
+
+        data.initializeStrings();
+        data.initializeIntegers();
+        data.initializeBooleans();
+        data.initializePermissionStrings();
+        data.initializeHeadSkins();
+
     }
 }

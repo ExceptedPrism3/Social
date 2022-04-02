@@ -6,7 +6,7 @@
 
     <groupId>me.prism3</groupId>
     <artifactId>Social</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <url>https://prism3.me</url>
 
     <modules>

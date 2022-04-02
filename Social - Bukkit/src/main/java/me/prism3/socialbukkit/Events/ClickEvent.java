@@ -1,6 +1,5 @@
 package me.prism3.socialbukkit.Events;
 
-import me.prism3.socialbukkit.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,34 +8,34 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.Objects;
 
+import static me.prism3.socialbukkit.Utils.Data.*;
+
 public class ClickEvent implements Listener {
 
-    private final Main main = Main.getInstance();
-
     @EventHandler
-    public void onClick(InventoryClickEvent e){
+    public void onClick(final InventoryClickEvent e){
 
         if (e.getClickedInventory() == null) return;
 
-        if (e.getView().getTitle().equalsIgnoreCase(Objects.requireNonNull(main.getConfig().getString("Social.Title")).replaceAll("&", "§"))) {
+        if (e.getView().getTitle().equalsIgnoreCase(socialTitle)) {
 
             e.setCancelled(true);
 
-            Player player = (Player) e.getWhoClicked();
+            final Player player = (Player) e.getWhoClicked();
 
             if (e.getCurrentItem() == null || !e.getCurrentItem().hasItemMeta()) return;
 
-            String displayName = Objects.requireNonNull(Objects.requireNonNull(e.getCurrentItem()).getItemMeta()).getDisplayName();
+            final String displayName = Objects.requireNonNull(Objects.requireNonNull(e.getCurrentItem()).getItemMeta()).getDisplayName();
 
             if (displayName.equals(ChatColor.WHITE + "" + ChatColor.BOLD + "Website")){
 
-                if (!main.getConfig().getBoolean("Website.Disabled")) {
+                if (!isWebsite) {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Website.Link")).replaceAll("&", "§"));
+                    player.sendMessage(websiteLink);
 
                 }else {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
+                    player.sendMessage(messageNotAvailable);
                 }
                 player.closeInventory();
 
@@ -44,78 +43,78 @@ public class ClickEvent implements Listener {
 
             if (displayName.equals(ChatColor.RED + "" + ChatColor.BOLD + "Youtube")) {
 
-                if (!main.getConfig().getBoolean("Youtube.Disabled")) {
+                if (!isYoutube) {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Youtube.Link")).replaceAll("&", "§"));
+                    player.sendMessage(youtubeLink);
 
                 }else {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
+                    player.sendMessage(messageNotAvailable);
                 }
                 player.closeInventory();
             }
 
             if (displayName.equals(ChatColor.BLUE + "" + ChatColor.BOLD + "Facebook")) {
 
-                if (!main.getConfig().getBoolean("Facebook.Disabled")) {
+                if (!isFacebook) {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Facebook.Link")).replaceAll("&", "§"));
+                    player.sendMessage(facebookLink);
 
                 }else {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
+                    player.sendMessage(messageNotAvailable);
                 }
                 player.closeInventory();
             }
 
             if (displayName.equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Twitch")) {
 
-                if (!main.getConfig().getBoolean("Twitch.Disabled")) {
+                if (!isTwitch) {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Twitch.Link")).replaceAll("&", "§"));
+                    player.sendMessage(twitchLink);
 
                 }else {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
+                    player.sendMessage(messageNotAvailable);
                 }
                 player.closeInventory();
             }
 
             if (displayName.equals(ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "Discord")) {
 
-                if (!main.getConfig().getBoolean("Discord.Disabled")) {
+                if (!isDiscord) {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Discord.Link")).replaceAll("&", "§"));
+                    player.sendMessage(discordLink);
 
                 }else {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
+                    player.sendMessage(messageNotAvailable);
                 }
                 player.closeInventory();
             }
 
             if (displayName.equals(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Instagram")) {
 
-                if (!main.getConfig().getBoolean("Instagram.Disabled")) {
+                if (!isInstagram) {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Instagram.Link")).replaceAll("&", "§"));
+                    player.sendMessage(instagramLink);
 
                 }else {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
+                    player.sendMessage(messageNotAvailable);
                 }
                 player.closeInventory();
             }
 
             if (displayName.equals(ChatColor.GOLD + "" + ChatColor.BOLD + "Store")) {
 
-                if (!main.getConfig().getBoolean("Store.Disabled")) {
+                if (!isStore) {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Store.Link")).replaceAll("&", "§"));
+                    player.sendMessage(storeLink);
 
                 }else {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
+                    player.sendMessage(messageNotAvailable);
                 }
                 player.closeInventory();
             }

@@ -5,12 +5,14 @@
 ![Downloads](https://img.shields.io/github/downloads/ExceptedPrism3/Social/total)
 ![Issues](https://img.shields.io/github/issues/ExceptedPrism3/Social)
 [![Discord](https://img.shields.io/discord/850407951629287424)](https://discord.gg/MfR5mcpVfX)
+[![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
+
 
 A Plugin that supports multiple server versions (Bukkit, BungeCord, WaterFall, Velocity, etc...)
 
-This plugin can be found on [Spigot](https://www.spigotmc.org/resources/logger.93562) & [MC-Market](https://www.mc-market.org/resources/20400/).
+This plugin can be found on [Spigot](https://www.spigotmc.org/resources/logger.93562) & [MC-Market](https://www.mc-market.org/resources/20400/) & [Hyatlas](https://hyatlas.com/shop/social.28).
 
-If support is needed or a suggesting that needs to be implemented, feel free to ask on the [Discord](https://discord.gg/MfR5mcpVfX).
+If support is needed or a suggesting that needs to be implemented, feel free to ask on the **[Discord](https://discord.gg/MfR5mcpVfX)**.
 
 # About the Plugin
 Social media corners for your Server, with some cool features.

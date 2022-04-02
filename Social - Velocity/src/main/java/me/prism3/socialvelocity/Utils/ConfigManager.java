@@ -20,13 +20,13 @@ public class ConfigManager {
 
     public ConfigManager() {
 
-        this.file = new File(dataFolder, "config - Velocity.yml");
+        this.file = new File(this.dataFolder, "config - Velocity.yml");
 
         try {
 
             if (!this.file.exists()) {
 
-                if (!dataFolder.exists()) { dataFolder.mkdir(); }
+                if (!this.dataFolder.exists()) { this.dataFolder.mkdir(); }
 
                 this.file.createNewFile();
 
@@ -35,10 +35,8 @@ public class ConfigManager {
                     assert is != null;
                     ByteStreams.copy(is, os);
                 }
-            }
-            this.configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(this.file);
-        }
-        catch (IOException e) { e.printStackTrace(); }
+            } this.configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(this.file);
+        }  catch (IOException e) { e.printStackTrace(); }
     }
 
     public boolean getBoolean(final String path) {
@@ -74,7 +72,7 @@ public class ConfigManager {
 
     private void load() {
 
-        this.file = new File(dataFolder, "config - Velocity.yml");
+        this.file = new File(this.dataFolder, "config - Velocity.yml");
 
         try {
 

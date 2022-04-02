@@ -13,8 +13,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
+import static me.prism3.socialbukkit.Utils.Data.*;
 import static me.prism3.socialbukkit.Utils.HeadSkins.*;
 
 public class onSocial implements CommandExecutor {
@@ -25,221 +25,208 @@ public class onSocial implements CommandExecutor {
 
         if (args.length != 0 && !args[0].equalsIgnoreCase("Reload")) {
 
-            sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Invalid-Syntax")).replaceAll("&", "§"));
-
+            sender.sendMessage(messageInvalidSyntax);
             return false;
+
         }
 
         else if (args.length == 1 && args[0].equalsIgnoreCase("Reload")) {
 
-            if (sender.hasPermission("social.reload")) {
+            if (sender.hasPermission(socialReload)) {
 
-                main.reloadConfig();
-                sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Reload-Message")).replaceAll("&", "§"));
+                this.main.reloadConfig();
+                sender.sendMessage(messageReload);
 
-            } else {
-
-                sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.No-Permission")).replaceAll("&", "§"));
-
-            }
+            } else sender.sendMessage(messageNoPermission);
 
         } else if (args.length > 1 && args[0].equalsIgnoreCase("Reload")) {
 
-            sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Invalid-Syntax")).replaceAll("&", "§"));
+            sender.sendMessage(messageInvalidSyntax);
 
+        } else if (!isMenu){
 
-        } else if (!main.getConfig().getBoolean("Social.Disable-Menu")){
+            if (sender instanceof Player && sender.hasPermission(socialUse)) {
 
-            if (sender instanceof Player && sender.hasPermission("social.use")) {
+                final Player player = (Player) sender;
 
-                Player player = (Player) sender;
+                final Inventory GUI = Bukkit.createInventory(player, menuSize, socialTitle);
 
-                Inventory GUI = Bukkit.createInventory(player, main.getConfig().getInt("Social.Size"), Objects.requireNonNull(main.getConfig().getString("Social.Title")).replaceAll("&", "§"));
+                // Icons Declaration
+                final ItemStack website = WebsiteSkin();
+                final ItemStack youtube = YoutubeSkin();
+                final ItemStack facebook = FacebookSkin();
+                final ItemStack twitch = TwitchSkin();
+                final ItemStack discord = DiscordSkin();
+                final ItemStack instagram = InstagramSkin();
+                final ItemStack store = StoreSkin();
+                final ItemStack close = new ItemStack(Material.BARRIER);
 
-                //Declaring the Icons
-                ItemStack Website = WebsiteSkin();
-                ItemStack Youtube = YoutubeSkin();
-                ItemStack Facebook = FacebookSkin();
-                ItemStack Twitch = TwitchSkin();
-                ItemStack Discord = DiscordSkin();
-                ItemStack Instagram = InstagramSkin();
-                ItemStack Store = StoreSkin();
-                ItemStack Close = new ItemStack(Material.BARRIER);
+                // Website Icon
+                final ItemMeta websiteMeta = website.getItemMeta();
+                assert websiteMeta != null;
+                websiteMeta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Website");
+                final ArrayList<String> websiteLore = new ArrayList<>();
 
+                if (!isWebsite) {
 
-                //Website Icon
-                ItemMeta WebsiteMeta = Website.getItemMeta();
-                assert WebsiteMeta != null;
-                WebsiteMeta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Website");
-                ArrayList<String> WebsiteLore = new ArrayList<>();
-                if (!main.getConfig().getBoolean("Website.Disabled")) {
+                    websiteLore.add(ChatColor.RED + messageAvailable);
 
-                    WebsiteLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Available")).replaceAll("&", "§"));
-                    WebsiteMeta.setLore(WebsiteLore);
-                    Website.setItemMeta(WebsiteMeta);
+                } else {
 
-                } else if (main.getConfig().getBoolean("Website.Disabled")) {
-
-                    WebsiteLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
-                    WebsiteMeta.setLore(WebsiteLore);
-                    Website.setItemMeta(WebsiteMeta);
+                    websiteLore.add(ChatColor.RED + messageNotAvailable);
 
                 }
 
-                //Youtube Icon
-                ItemMeta YoutubeMeta = Youtube.getItemMeta();
-                assert YoutubeMeta != null;
-                YoutubeMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Youtube");
-                ArrayList<String> YoutubeLore = new ArrayList<>();
-                if (!main.getConfig().getBoolean("Youtube.Disabled")) {
+                websiteMeta.setLore(websiteLore);
+                website.setItemMeta(websiteMeta);
 
-                    YoutubeLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Available")).replaceAll("&", "§"));
-                    YoutubeMeta.setLore(YoutubeLore);
-                    Youtube.setItemMeta(YoutubeMeta);
+                // Youtube Icon
+                final ItemMeta youtubeMeta = youtube.getItemMeta();
+                assert youtubeMeta != null;
+                youtubeMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Youtube");
+                final ArrayList<String> youtubeLore = new ArrayList<>();
 
-                } else if (main.getConfig().getBoolean("Youtube.Disabled")) {
+                if (!isYoutube) {
 
-                    YoutubeLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
-                    YoutubeMeta.setLore(YoutubeLore);
-                    Youtube.setItemMeta(YoutubeMeta);
+                    youtubeLore.add(ChatColor.RED + messageAvailable);
 
-                }
+                } else {
 
-                //Facebook Icon
-                ItemMeta FacebookMeta = Facebook.getItemMeta();
-                assert FacebookMeta != null;
-                FacebookMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Facebook");
-                ArrayList<String> FacebookLore = new ArrayList<>();
-                if (!main.getConfig().getBoolean("Facebook.Disabled")) {
-
-                    FacebookLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Available")).replaceAll("&", "§"));
-                    FacebookMeta.setLore(FacebookLore);
-                    Facebook.setItemMeta(FacebookMeta);
-
-                } else if (main.getConfig().getBoolean("Facebook.Disabled")) {
-
-                    FacebookLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
-                    FacebookMeta.setLore(FacebookLore);
-                    Facebook.setItemMeta(FacebookMeta);
+                    youtubeLore.add(ChatColor.RED + messageNotAvailable);
 
                 }
 
-                //Twitch Icon
-                ItemMeta TwitchMeta = Twitch.getItemMeta();
-                assert TwitchMeta != null;
-                TwitchMeta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Twitch");
-                ArrayList<String> TwitchLore = new ArrayList<>();
-                if (!main.getConfig().getBoolean("Twitch.Disabled")) {
+                youtubeMeta.setLore(youtubeLore);
+                youtube.setItemMeta(youtubeMeta);
 
-                    TwitchLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Available")).replaceAll("&", "§"));
-                    TwitchMeta.setLore(TwitchLore);
-                    Twitch.setItemMeta(TwitchMeta);
+                // Facebook Icon
+                final ItemMeta facebookMeta = facebook.getItemMeta();
+                assert facebookMeta != null;
+                facebookMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Facebook");
+                final ArrayList<String> facebookLore = new ArrayList<>();
 
-                } else if (main.getConfig().getBoolean("Twitch.Disabled")) {
+                if (!isFacebook) {
 
-                    TwitchLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
-                    TwitchMeta.setLore(TwitchLore);
-                    Twitch.setItemMeta(TwitchMeta);
+                    facebookLore.add(ChatColor.RED + messageAvailable);
 
-                }
+                } else {
 
-                //Discord Icon
-                ItemMeta DiscordMeta = Discord.getItemMeta();
-                assert DiscordMeta != null;
-                DiscordMeta.setDisplayName(ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "Discord");
-                ArrayList<String> DiscordLore = new ArrayList<>();
-                if (!main.getConfig().getBoolean("Discord.Disabled")) {
-
-                    DiscordLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Available")).replaceAll("&", "§"));
-                    DiscordMeta.setLore(DiscordLore);
-                    Discord.setItemMeta(DiscordMeta);
-
-                } else if (main.getConfig().getBoolean("Discord.Disabled")) {
-
-                    DiscordLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
-                    DiscordMeta.setLore(DiscordLore);
-                    Discord.setItemMeta(DiscordMeta);
+                    facebookLore.add(ChatColor.RED + messageNotAvailable);
 
                 }
 
-                //Instagram Icon
-                ItemMeta InstagramMeta = Instagram.getItemMeta();
-                assert InstagramMeta != null;
-                InstagramMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Instagram");
-                ArrayList<String> InstagramLore = new ArrayList<>();
-                if (!main.getConfig().getBoolean("Instagram.Disabled")) {
+                facebookMeta.setLore(facebookLore);
+                facebook.setItemMeta(facebookMeta);
 
-                    InstagramLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Available")).replaceAll("&", "§"));
-                    InstagramMeta.setLore(InstagramLore);
-                    Instagram.setItemMeta(InstagramMeta);
+                // Twitch Icon
+                final ItemMeta twitchMeta = twitch.getItemMeta();
+                assert twitchMeta != null;
+                twitchMeta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Twitch");
+                final ArrayList<String> twitchLore = new ArrayList<>();
 
-                } else if (main.getConfig().getBoolean("Instagram.Disabled")) {
+                if (!isTwitch) {
 
-                    InstagramLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
-                    InstagramMeta.setLore(InstagramLore);
-                    Instagram.setItemMeta(InstagramMeta);
+                    twitchLore.add(ChatColor.RED + messageAvailable);
 
-                }
+                } else {
 
-
-                //Store Icon
-                ItemMeta StoreMeta = Store.getItemMeta();
-                assert StoreMeta != null;
-                StoreMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Store");
-                ArrayList<String> StoreLore = new ArrayList<>();
-                if (!main.getConfig().getBoolean("Store.Disabled")) {
-
-                    StoreLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Available")).replaceAll("&", "§"));
-                    StoreMeta.setLore(StoreLore);
-                    Store.setItemMeta(StoreMeta);
-
-                } else if (main.getConfig().getBoolean("Store.Disabled")) {
-
-                    StoreLore.add(ChatColor.RED + Objects.requireNonNull(main.getConfig().getString("Messages.Not-Available")).replaceAll("&", "§"));
-                    StoreMeta.setLore(StoreLore);
-                    Store.setItemMeta(StoreMeta);
+                    twitchLore.add(ChatColor.RED + messageNotAvailable);
 
                 }
 
-                //Close Icon
+                twitchMeta.setLore(twitchLore);
+                twitch.setItemMeta(twitchMeta);
 
-                ItemMeta CloseMeta = Close.getItemMeta();
-                assert CloseMeta != null;
-                CloseMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Close");
-                ArrayList<String> CloseLore = new ArrayList<>();
-                CloseLore.add(ChatColor.GOLD + "Close the Menu.");
-                CloseMeta.setLore(CloseLore);
-                Close.setItemMeta(CloseMeta);
+                // Discord Icon
+                final ItemMeta discordMeta = discord.getItemMeta();
+                assert discordMeta != null;
+                discordMeta.setDisplayName(ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "Discord");
+                final ArrayList<String> discordLore = new ArrayList<>();
 
+                if (!isDiscord) {
 
-                //Setting the Icons
-                GUI.setItem(main.getConfig().getInt("Website.Slot"), Website);
+                    discordLore.add(ChatColor.RED + messageAvailable);
 
-                GUI.setItem(main.getConfig().getInt("Youtube.Slot"), Youtube);
+                } else {
 
-                GUI.setItem(main.getConfig().getInt("Facebook.Slot"), Facebook);
+                    discordLore.add(ChatColor.RED + messageNotAvailable);
 
-                GUI.setItem(main.getConfig().getInt("Twitch.Slot"), Twitch);
+                }
 
-                GUI.setItem(main.getConfig().getInt("Discord.Slot"), Discord);
+                discordMeta.setLore(discordLore);
+                discord.setItemMeta(discordMeta);
 
-                GUI.setItem(main.getConfig().getInt("Instagram.Slot"), Instagram);
+                // Instagram Icon
+                final ItemMeta instagramMeta = instagram.getItemMeta();
+                assert instagramMeta != null;
+                instagramMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Instagram");
+                final ArrayList<String> instagramLore = new ArrayList<>();
 
-                GUI.setItem(main.getConfig().getInt("Store.Slot"), Store);
+                if (!isInstagram) {
 
-                GUI.setItem(main.getConfig().getInt("Social.Size") - 5, Close);
+                    instagramLore.add(ChatColor.RED + messageAvailable);
+
+                } else {
+
+                    instagramLore.add(ChatColor.RED + messageNotAvailable);
+
+                }
+
+                instagramMeta.setLore(instagramLore);
+                instagram.setItemMeta(instagramMeta);
+
+                // Store Icon
+                final ItemMeta storeMeta = store.getItemMeta();
+                assert storeMeta != null;
+                storeMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Store");
+                final ArrayList<String> storeLore = new ArrayList<>();
+
+                if (!isStore) {
+
+                    storeLore.add(ChatColor.RED + messageAvailable);
+
+                } else {
+
+                    storeLore.add(ChatColor.RED + messageNotAvailable);
+
+                }
+
+                storeMeta.setLore(storeLore);
+                store.setItemMeta(storeMeta);
+
+                // Close Icon
+                final ItemMeta closeMeta = close.getItemMeta();
+                assert closeMeta != null;
+                closeMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Close");
+                final ArrayList<String> closeLore = new ArrayList<>();
+                closeLore.add(ChatColor.GOLD + "Close the Menu.");
+                closeMeta.setLore(closeLore);
+                close.setItemMeta(closeMeta);
+
+                // Setting the Icons
+                GUI.setItem(this.main.getConfig().getInt("Website.Slot"), website);
+
+                GUI.setItem(this.main.getConfig().getInt("Youtube.Slot"), youtube);
+
+                GUI.setItem(this.main.getConfig().getInt("Facebook.Slot"), facebook);
+
+                GUI.setItem(this.main.getConfig().getInt("Twitch.Slot"), twitch);
+
+                GUI.setItem(this.main.getConfig().getInt("Discord.Slot"), discord);
+
+                GUI.setItem(this.main.getConfig().getInt("Instagram.Slot"), instagram);
+
+                GUI.setItem(this.main.getConfig().getInt("Store.Slot"), store);
+
+                GUI.setItem(this.main.getConfig().getInt("Social.Size") - 5, close);
 
                 player.openInventory(GUI);
-            } else {
 
-                main.getLogger().severe("This command can only be executed in-game!");
+            } else this.main.getLogger().severe("This command can only be executed in-game!");
 
-            }
+        }else {
 
-        }else if (main.getConfig().getBoolean("Social.Disable-Menu")){
-
-            sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Feature-Disabled")).replaceAll("&", "§"));
-
+            sender.sendMessage(featureDisabled);
             return false;
         }
         return true;

@@ -1,0 +1,35 @@
+<-!------------------------------------------ v1.2 ------------------------------------------!->
+
+Additions
+    [+] Store in config.yml
+
+Fixes
+    [!] Version Checker Issue
+
+Removes
+    [-] /shop as an alias for /store as it may interfere between /shop for a shop plugin on Spigot Server.
+
+<-!------------------------------------------ v1.2.1 ------------------------------------------!->
+
+Additions
+    [+] Velocity Support
+    [+] New Update Checker for Bukkit Instance
+
+Fixes
+    [!] Users can move items while in the social menu
+
+Changes
+    [*] Merged Spigot and BungeeCord into 1 jar
+    [*] The Console can now execute social commands such as /discord, /Instagram, etc...
+    [*] Some code improvements
+
+<-!------------------------------------------ v1.2.2 ------------------------------------------!->
+
+Additions
+    [+] 1.18.2 Support
+
+Fixes
+    [!] True/False values being inverted in config
+
+Changes
+    [*] Minor Code Improvements
