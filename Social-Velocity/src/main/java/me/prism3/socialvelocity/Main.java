@@ -69,7 +69,7 @@ public class Main {
         this.logger.info("Plugin unloaded");
     }
 
-    private void initializeData(Data data) {
+    public void initializeData(Data data) {
 
         data.initializeStrings();
         data.initializeIntegers();

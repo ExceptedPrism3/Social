@@ -40,7 +40,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() { this.getLogger().info("Plugin unloaded!"); }
 
-    private void initializeData(Data data) {
+    public void initializeData(Data data) {
 
         data.initializeStrings();
         data.initializeIntegers();

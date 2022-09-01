@@ -46,7 +46,7 @@ public final class Main extends Plugin {
     @Override
     public void onDisable() { this.getLogger().info("Has been unloaded!"); }
 
-    private void initializeData(Data data) {
+    public void initializeData(Data data) {
 
         data.initializeStrings();
         data.initializeListOfStrings();

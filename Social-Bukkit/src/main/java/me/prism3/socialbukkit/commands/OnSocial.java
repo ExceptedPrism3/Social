@@ -1,6 +1,7 @@
 package me.prism3.socialbukkit.commands;
 
 import me.prism3.socialbukkit.Main;
+import me.prism3.socialbukkit.utils.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -35,6 +36,7 @@ public class OnSocial implements CommandExecutor {
             if (sender.hasPermission(socialReload)) {
 
                 this.main.reloadConfig();
+                this.main.initializeData(new Data());
                 sender.sendMessage(messageReload);
 
             } else sender.sendMessage(messageNoPermission);
@@ -222,7 +224,7 @@ public class OnSocial implements CommandExecutor {
 
                 player.openInventory(gui);
 
-            } else this.main.getLogger().severe("This command can only be executed in-game!");
+            } else this.main.getLogger().severe("Thank you for using the Social plugin. Version: " + ChatColor.GOLD + this.main.getDescription().getVersion());
 
         } else {
 
