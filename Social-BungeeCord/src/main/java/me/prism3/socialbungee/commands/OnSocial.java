@@ -1,6 +1,7 @@
 package me.prism3.socialbungee.commands;
 
 import me.prism3.socialbungee.Main;
+import me.prism3.socialbungee.utils.Data;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Command;
@@ -30,6 +31,7 @@ public class OnSocial extends Command {
             } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
 
                 this.main.getConfig().init();
+                this.main.initializeData(new Data());
                 sender.sendMessage(new TextComponent(messageReload));
 
             } else sender.sendMessage(new TextComponent(invalidSyntax));

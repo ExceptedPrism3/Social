@@ -4,6 +4,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.prism3.socialvelocity.Main;
+import me.prism3.socialvelocity.utils.Data;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 
@@ -35,6 +36,7 @@ public class OnSocial implements SimpleCommand {
             } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
 
                 this.main.getConfig().reload();
+                this.main.initializeData(new Data());
                 sender.sendMessage(Identity.nil(), Component.text(messageReload));
 
             } else sender.sendMessage(Identity.nil(), Component.text(invalidSyntax));
