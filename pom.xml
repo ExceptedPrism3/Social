@@ -6,14 +6,14 @@
 
     <groupId>me.prism3</groupId>
     <artifactId>Social</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <url>https://prism3.me</url>
 
     <modules>
-        <module>Social - Bukkit</module>
-        <module>Social - BungeeCord</module>
-        <module>Social - Velocity</module>
-        <module>Social - Shaded</module>
+        <module>Social-Bukkit</module>
+        <module>Social-BungeeCord</module>
+        <module>Social-Velocity</module>
+        <module>Social-Shaded</module>
     </modules>
 
     <packaging>pom</packaging>

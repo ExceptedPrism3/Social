@@ -1,6 +1,5 @@
 # Social
 
-![Updated Badge](https://badges.pufler.dev/updated/ExceptedPrism3/Social)
 ![Version](https://img.shields.io/github/v/release/ExceptedPrism3/Social)
 ![Downloads](https://img.shields.io/github/downloads/ExceptedPrism3/Social/total)
 ![Issues](https://img.shields.io/github/issues/ExceptedPrism3/Social)
