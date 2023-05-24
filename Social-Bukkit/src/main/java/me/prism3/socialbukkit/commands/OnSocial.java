@@ -65,7 +65,6 @@ public class OnSocial implements CommandExecutor {
 
                 // Website Icon
                 final ItemMeta websiteMeta = website.getItemMeta();
-                assert websiteMeta != null;
                 websiteMeta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Website");
                 final ArrayList<String> websiteLore = new ArrayList<>();
 
@@ -84,7 +83,6 @@ public class OnSocial implements CommandExecutor {
 
                 // Youtube Icon
                 final ItemMeta youtubeMeta = youtube.getItemMeta();
-                assert youtubeMeta != null;
                 youtubeMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Youtube");
                 final ArrayList<String> youtubeLore = new ArrayList<>();
 
@@ -103,7 +101,6 @@ public class OnSocial implements CommandExecutor {
 
                 // Facebook Icon
                 final ItemMeta facebookMeta = facebook.getItemMeta();
-                assert facebookMeta != null;
                 facebookMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Facebook");
                 final ArrayList<String> facebookLore = new ArrayList<>();
 
@@ -122,7 +119,6 @@ public class OnSocial implements CommandExecutor {
 
                 // Twitch Icon
                 final ItemMeta twitchMeta = twitch.getItemMeta();
-                assert twitchMeta != null;
                 twitchMeta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Twitch");
                 final ArrayList<String> twitchLore = new ArrayList<>();
 
@@ -141,7 +137,6 @@ public class OnSocial implements CommandExecutor {
 
                 // Discord Icon
                 final ItemMeta discordMeta = discord.getItemMeta();
-                assert discordMeta != null;
                 discordMeta.setDisplayName(ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "Discord");
                 final ArrayList<String> discordLore = new ArrayList<>();
 
@@ -160,7 +155,6 @@ public class OnSocial implements CommandExecutor {
 
                 // Instagram Icon
                 final ItemMeta instagramMeta = instagram.getItemMeta();
-                assert instagramMeta != null;
                 instagramMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Instagram");
                 final ArrayList<String> instagramLore = new ArrayList<>();
 
@@ -179,7 +173,6 @@ public class OnSocial implements CommandExecutor {
 
                 // Store Icon
                 final ItemMeta storeMeta = store.getItemMeta();
-                assert storeMeta != null;
                 storeMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Store");
                 final ArrayList<String> storeLore = new ArrayList<>();
 
@@ -198,7 +191,6 @@ public class OnSocial implements CommandExecutor {
 
                 // Close Icon
                 final ItemMeta closeMeta = close.getItemMeta();
-                assert closeMeta != null;
                 closeMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Close");
                 final ArrayList<String> closeLore = new ArrayList<>();
                 closeLore.add(ChatColor.GOLD + "Close the Menu.");

@@ -34,21 +34,18 @@ public class Main extends JavaPlugin {
                 .checkNow();
 
         this.getLogger().info("Plugin loaded!");
-
     }
 
     @Override
     public void onDisable() { this.getLogger().info("Plugin unloaded!"); }
 
-    public void initializeData(Data data) {
+    public void initializeData(final Data data) {
 
         data.initializeStrings();
         data.initializeIntegers();
         data.initializeBooleans();
         data.initializePermissionStrings();
-        data.initializeHeadSkins();
         data.commandInitializer();
-
     }
 
     public static Main getInstance() {

@@ -5,8 +5,47 @@ import me.prism3.socialbukkit.commands.*;
 
 public class Data {
 
-    private final Main main = Main.getInstance();
+    private static final Main main = Main.getInstance();
 
+    public static final String PLUGIN_PREFIX_KEY = "Messages.Prefix";
+    public static final String MESSAGE_AVAILABLE_KEY = "Messages.Available";
+    public static final String MESSAGE_NOT_AVAILABLE_KEY = "Messages.Not-Available";
+    public static final String MESSAGE_NO_PERMISSION_KEY = "Messages.No-Permission";
+    public static final String MESSAGE_INVALID_SYNTAX_KEY = "Messages.Invalid-Syntax";
+    public static final String MESSAGE_RELOAD_KEY = "Messages.Reload-Message";
+    public static final String SOCIAL_TITLE_KEY = "Social.Title";
+    public static final String WEBSITE_LINK_KEY = "Website.Link";
+    public static final String YOUTUBE_LINK_KEY = "Youtube.Link";
+    public static final String FACEBOOK_LINK_KEY = "Facebook.Link";
+    public static final String TWITCH_LINK_KEY = "Twitch.Link";
+    public static final String DISCORD_LINK_KEY = "Discord.Link";
+    public static final String INSTAGRAM_LINK_KEY = "Instagram.Link";
+    public static final String STORE_LINK_KEY = "Store.Link";
+    public static final String FEATURE_DISABLED_KEY = "Messages.Feature-Disabled";
+    public static final String PLUGIN_VERSION_KEY = "plugin.version";
+    public static final String RESOURCE_ID_KEY = "resourceID";
+    public static final String MENU_SIZE_KEY = "Social.Size";
+    public static final String IS_WEBSITE_KEY = "Website.Disabled";
+    public static final String IS_YOUTUBE_KEY = "Youtube.Disabled";
+    public static final String IS_FACEBOOK_KEY = "Facebook.Disabled";
+    public static final String IS_TWITCH_KEY = "Twitch.Disabled";
+    public static final String IS_DISCORD_KEY = "Discord.Disabled";
+    public static final String IS_INSTAGRAM_KEY = "Instagram.Disabled";
+    public static final String IS_STORE_KEY = "Store.Disabled";
+    public static final String IS_MENU_KEY = "Social.Disable-Menu";
+    public static final String SOCIAL_USE_KEY = "social.use";
+    public static final String SOCIAL_RELOAD_KEY = "social.reload";
+    public static final String WEBSITE_SKIN_KEY = "Website.Skin";
+    public static final String YOUTUBE_SKIN_KEY = "Youtube.Skin";
+    public static final String FACEBOOK_SKIN_KEY = "Facebook.Skin";
+    public static final String TWITCH_SKIN_KEY = "Twitch.Skin";
+    public static final String DISCORD_SKIN_KEY = "Discord.Skin";
+    public static final String INSTAGRAM_SKIN_KEY = "Instagram.Skin";
+    public static final String STORE_SKIN_KEY = "Store.Skin";
+
+    private Data() {}
+
+    public static String pluginPrefix;
     public static String messageAvailable;
     public static String messageNotAvailable;
     public static String messageNoPermission;
@@ -21,6 +60,7 @@ public class Data {
     public static String instagramLink;
     public static String storeLink;
     public static String featureDisabled;
+    public static String pluginVersion;
 
     public static int resourceID;
     public static int menuSize;
@@ -47,28 +87,28 @@ public class Data {
 
     public void initializeStrings() {
 
-        messageAvailable = main.getConfig().getString("Messages.Available").replace("&", "§");
-        messageNotAvailable = main.getConfig().getString("Messages.Not-Available").replace("&", "§");
-        messageNoPermission = main.getConfig().getString("Messages.No-Permission").replace("&", "§");
-        messageInvalidSyntax = main.getConfig().getString("Messages.Invalid-Syntax").replace("&", "§");
-        messageReload = main.getConfig().getString("Messages.Reload-Message").replace("&", "§");
-        socialTitle = main.getConfig().getString("Social.Title").replace("&", "§");
-        websiteLink = main.getConfig().getString("Website.Link").replace("&", "§");
-        youtubeLink = main.getConfig().getString("Youtube.Link").replace("&", "§");
-        facebookLink = main.getConfig().getString("Facebook.Link").replace("&", "§");
-        twitchLink = main.getConfig().getString("Twitch.Link").replace("&", "§");
-        discordLink = main.getConfig().getString("Discord.Link").replace("&", "§");
-        instagramLink = main.getConfig().getString("Instagram.Link").replace("&", "§");
-        storeLink = main.getConfig().getString("Store.Link").replace("&", "§");
-        featureDisabled = main.getConfig().getString("Messages.Feature-Disabled").replace("&", "§");
-
+        pluginPrefix = main.getConfig().getString("Messages.Prefix").replace("&", "§");
+        messageAvailable = main.getConfig().getString("Messages.Available").replace("&", "§").replace("%prefix%", pluginPrefix);
+        messageNotAvailable = main.getConfig().getString("Messages.Not-Available").replace("&", "§").replace("%prefix%", pluginPrefix);
+        messageNoPermission = main.getConfig().getString("Messages.No-Permission").replace("&", "§").replace("%prefix%", pluginPrefix);
+        messageInvalidSyntax = main.getConfig().getString("Messages.Invalid-Syntax").replace("&", "§").replace("%prefix%", pluginPrefix);
+        messageReload = main.getConfig().getString("Messages.Reload-Message").replace("&", "§").replace("%prefix%", pluginPrefix);
+        socialTitle = main.getConfig().getString("Social.Title").replace("&", "§").replace("%prefix%", pluginPrefix);
+        websiteLink = main.getConfig().getString("Website.Link").replace("&", "§").replace("%prefix%", pluginPrefix);
+        youtubeLink = main.getConfig().getString("Youtube.Link").replace("&", "§").replace("%prefix%", pluginPrefix);
+        facebookLink = main.getConfig().getString("Facebook.Link").replace("&", "§").replace("%prefix%", pluginPrefix);
+        twitchLink = main.getConfig().getString("Twitch.Link").replace("&", "§").replace("%prefix%", pluginPrefix);
+        discordLink = main.getConfig().getString("Discord.Link").replace("&", "§").replace("%prefix%", pluginPrefix);
+        instagramLink = main.getConfig().getString("Instagram.Link").replace("&", "§").replace("%prefix%", pluginPrefix);
+        storeLink = main.getConfig().getString("Store.Link").replace("&", "§").replace("%prefix%", pluginPrefix);
+        featureDisabled = main.getConfig().getString("Messages.Feature-Disabled").replace("&", "§").replace("%prefix%", pluginPrefix);
+        pluginVersion = main.getDescription().getVersion();
     }
 
     public void initializeIntegers() {
 
         resourceID = 93562;
         menuSize = main.getConfig().getInt("Social.Size");
-
     }
 
     public void initializeBooleans() {
@@ -81,53 +121,40 @@ public class Data {
         isInstagram = main.getConfig().getBoolean("Instagram.Disabled");
         isStore = main.getConfig().getBoolean("Store.Disabled");
         isMenu = main.getConfig().getBoolean("Social.Disable-Menu");
-
     }
 
     public void initializePermissionStrings() {
 
         socialUse = "social.use";
         socialReload = "social.reload";
-
-    }
-
-    // Skins base64 from minecraft-heads.com
-    public void initializeHeadSkins() {
-
-        websiteSkin = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQ5ZjE4YzlkODVmOTJmNzJmODY0ZDY3YzEzNjdlOWE0NWRjMTBmMzcxNTQ5YzQ2YTRkNGRkOWU0ZjEzZmY0In19fQ==";
-        youtubeSkin = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmI3Njg4ZGE0NjU4NmI4NTlhMWNkZTQwY2FlMWNkYmMxNWFiZTM1NjE1YzRiYzUyOTZmYWQwOTM5NDEwNWQwIn19fQ==";
-        facebookSkin = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGViNDYxMjY5MDQ0NjNmMDdlY2ZjOTcyYWFhMzczNzNhMjIzNTliNWJhMjcxODIxYjY4OWNkNTM2N2Y3NTc2MiJ9fX0==";
-        twitchSkin = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmYxOGZhNDNkNGQ5Mzc4OTQ4YjU2Yjg1YjUzMTk3OTA3NDExOWMxMjUyMzJlNzE1Y2U0YmQ1Mjc4MGFjNGQ3NiJ9fX0==";
-        discordSkin = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzg3M2MxMmJmZmI1MjUxYTBiODhkNWFlNzVjNzI0N2NiMzlhNzVmZjFhODFjYmU0YzhhMzliMzExZGRlZGEifX19==";
-        instagramSkin = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjBlYzgyODQxOTkwOWU3YzJmYWZiYjNmNzU4NzNkNzk2ZTkwYmZjYjEyODhhNWNiYmQwMTYxNDYwMjdmMTc4OCJ9fX0==";
-        storeSkin = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2UzZGViNTdlYWEyZjRkNDAzYWQ1NzI4M2NlOGI0MTgwNWVlNWI2ZGU5MTJlZTJiNGVhNzM2YTlkMWY0NjVhNyJ9fX0==";
     }
 
     public void commandInitializer() {
 
-        if (!this.main.getConfig().getBoolean("Social.Disable-Menu"))
-            this.main.getCommand("social").setExecutor(new OnSocial());
+        if (!main.getConfig().getBoolean("Social.Disable-Menu"))
+            main.getCommand("social").setExecutor(new OnSocial());
 
-        if (!this.main.getConfig().getBoolean("Website.Disabled"))
-            this.main.getCommand("website").setExecutor(new OnWebsite());
+        if (!main.getConfig().getBoolean("Website.Disabled"))
+            main.getCommand("website").setExecutor(new OnWebsite());
 
-        if (!this.main.getConfig().getBoolean("Youtube.Disabled"))
-            this.main.getCommand("youtube").setExecutor(new OnYoutube());
+        if (!main.getConfig().getBoolean("Youtube.Disabled"))
+            main.getCommand("youtube").setExecutor(new OnYoutube());
 
-        if (!this.main.getConfig().getBoolean("Facebook.Disabled"))
-            this.main.getCommand("facebook").setExecutor(new OnFacebook());
+        if (!main.getConfig().getBoolean("Facebook.Disabled"))
+            main.getCommand("facebook").setExecutor(new OnFacebook());
 
-        if (!this.main.getConfig().getBoolean("Twitch.Disabled"))
-            this.main.getCommand("twitch").setExecutor(new OnTwitch());
+        if (!main.getConfig().getBoolean("Twitch.Disabled"))
+            main.getCommand("twitch").setExecutor(new OnTwitch());
 
-        if (!this.main.getConfig().getBoolean("Discord.Disabled"))
-            this.main.getCommand("discord").setExecutor(new OnDiscord());
+        if (!main.getConfig().getBoolean("Discord.Disabled"))
+            main.getCommand("discord").setExecutor(new OnDiscord());
 
-        if (!this.main.getConfig().getBoolean("Instagram.Disabled"))
-            this.main.getCommand("instagram").setExecutor(new OnInstagram());
+        if (!main.getConfig().getBoolean("Instagram.Disabled"))
+            main.getCommand("instagram").setExecutor(new OnInstagram());
 
-        if (!this.main.getConfig().getBoolean("Store.Disabled"))
-            this.main.getCommand("store").setExecutor(new OnStore());
-
+        if (!main.getConfig().getBoolean("Store.Disabled"))
+            main.getCommand("store").setExecutor(new OnStore());
     }
+
+    private static String getConfigSection(final String key) { return main.getConfig().getString(key, ""); }
 }

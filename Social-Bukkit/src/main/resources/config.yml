@@ -19,50 +19,60 @@
 # The Size can only be one of the following: 9 / 18 / 27 / 36 / 45 / 54
 Social:
   Disable-Menu: false
-  Title: '&6&lSocialMedia Corners'
+  Title: "&6&lSocialMedia Corners"
   Size: 45
 
+Links:
 # Social Media Links & Configs
-Website:
-  Disabled: false
-  Link: '&f&lWebsite.com'
-  Slot: 10
-
-Youtube:
-  Disabled: false
-  Link: '&c&lYoutube.com'
-  Slot: 12
-
-Facebook:
-  Disabled: false
-  Link: '&b&lFacebook.com'
-  Slot: 14
-
-Twitch:
-  Disabled: false
-  Link: '&d&lTwitch.com'
-  Slot: 16
-
-Discord:
-  Disabled: false
-  Link: '&9&lDiscord.com'
-  Slot: 28
-
-Instagram:
-  Disabled: false
-  Link: '&5&lInstagram.com'
-  Slot: 34
-
-Store:
-  Disabled: false
-  Link: '&6&lStore.com'
-  Slot: 31
+  Website:
+    Disabled: false
+    Head: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQ5ZjE4YzlkODVmOTJmNzJmODY0ZDY3YzEzNjdlOWE0NWRjMTBmMzcxNTQ5YzQ2YTRkNGRkOWU0ZjEzZmY0In19fQ==
+    Display-Name: "&f&lWebsite"
+    Link: "&f&lWebsite.com"
+    Slot: 10
+  Youtube:
+    Disabled: false
+    Head: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmI3Njg4ZGE0NjU4NmI4NTlhMWNkZTQwY2FlMWNkYmMxNWFiZTM1NjE1YzRiYzUyOTZmYWQwOTM5NDEwNWQwIn19fQ==
+    Display-Name: "&c&lYoutube"
+    Link: "&c&lYoutube.com"
+    Slot: 12
+  Facebook:
+    Disabled: false
+    Head: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGViNDYxMjY5MDQ0NjNmMDdlY2ZjOTcyYWFhMzczNzNhMjIzNTliNWJhMjcxODIxYjY4OWNkNTM2N2Y3NTc2MiJ9fX0==
+    Display-Name: "&b&lFacebook"
+    Link: "&b&lFacebook.com"
+    Slot: 14
+  Twitch:
+    Disabled: false
+    Head: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmYxOGZhNDNkNGQ5Mzc4OTQ4YjU2Yjg1YjUzMTk3OTA3NDExOWMxMjUyMzJlNzE1Y2U0YmQ1Mjc4MGFjNGQ3NiJ9fX0==
+    Display-Name: "&d&lTwitch"
+    Link: "&d&lTwitch.com"
+    Slot: 16
+  Discord:
+    Disabled: false
+    Head: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzg3M2MxMmJmZmI1MjUxYTBiODhkNWFlNzVjNzI0N2NiMzlhNzVmZjFhODFjYmU0YzhhMzliMzExZGRlZGEifX19==
+    Display-Name: "&9&lDiscord"
+    Link: "&9&lDiscord.com"
+    Slot: 28
+  Instagram:
+    Disabled: false
+    Head: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjBlYzgyODQxOTkwOWU3YzJmYWZiYjNmNzU4NzNkNzk2ZTkwYmZjYjEyODhhNWNiYmQwMTYxNDYwMjdmMTc4OCJ9fX0==
+    Display-Name: "&5&lInstagram"
+    Link: "&5&lInstagram.com"
+    Slot: 34
+  Store:
+    Disabled: false
+    Head: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2UzZGViNTdlYWEyZjRkNDAzYWQ1NzI4M2NlOGI0MTgwNWVlNWI2ZGU5MTJlZTJiNGVhNzM2YTlkMWY0NjVhNyJ9fX0==
+    Display-Name: "&6&lStore"
+    Link: "&6&lStore.com"
+    Slot: 31
 
 
 Messages:
-  No-Permission: '&cYou do not have permission to run this command.'
-  Reload-Message: '&aConfig Reloaded.'
-  Invalid-Syntax: '&cInvalid Syntax!'
-  Available: '&aAvailable!'
-  Not-Available: '&4Not available!'
-  Feature-Disabled: '&cThis feature is disabled!'
+  Prefix: "&b&lSocial &8&l|"
+  No-Permission: "&cYou do not have permission to run this command."
+  Reload-Message: "&aConfig Reloaded."
+  Invalid-Syntax: "&cInvalid Syntax!"
+  Available: "&aAvailable!"
+  Not-Available: "&4Not available!"
+  Feature-Disabled: "&cThis feature is disabled!"
