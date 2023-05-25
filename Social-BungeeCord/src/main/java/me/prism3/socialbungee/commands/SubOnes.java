@@ -34,11 +34,11 @@ public class SubOnes extends Command {
      * @param args    the command arguments
      */
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(final CommandSender sender, final String[] args) {
 
         if (sender.hasPermission(socialUsePermission)) { // Check if the sender has the required permission
 
-            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', link.getUrl()))); // Send the URL message
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', this.link.getUrl()))); // Send the URL message
 
         } else {
 

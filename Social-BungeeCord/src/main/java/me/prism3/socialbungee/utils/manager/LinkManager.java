@@ -21,9 +21,11 @@ public class LinkManager {
     /**
      * Initializes the LinkManager by retrieving link data from the plugin's configuration and creating Links objects.
      */
-    public LinkManager(Main main) {
+    public LinkManager(final Main main) {
+
         this.main = main;
         this.links = new ArrayList<>();
+
         this.initializeLinks();
     }
 
@@ -43,23 +45,25 @@ public class LinkManager {
 
         for (String key : linksSection.getKeys()) {
 
-            Object linkData = linksSection.get(key);
+            Configuration linkSection = linksSection.getSection(key);
 
-            if (linkData instanceof String) {
-                String link = (String) linkData;
-                Links linkEntry = new Links(key, link);
-                links.add(linkEntry);
+            if (linkSection != null) {
+
+                String link = linkSection.getString("Link");
+
+                if (link != null) {
+
+                    Links linkEntry = new Links(key, link);
+                    this.links.add(linkEntry);
+                }
             }
         }
     }
-
 
     /**
      * Retrieves the list of links.
      *
      * @return The list of links.
      */
-    public List<Links> getLinks() {
-        return links;
-    }
+    public List<Links> getLinks() { return this.links; }
 }

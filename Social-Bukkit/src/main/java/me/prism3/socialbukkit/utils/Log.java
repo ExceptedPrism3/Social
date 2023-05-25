@@ -34,6 +34,15 @@ public final class Log {
     }
 
     /**
+     * Logs a warn level message.
+     *
+     * @param message The message to be logged.
+     */
+    public static void warn(final String message) {
+        logger.warning(message);
+    }
+
+    /**
      * Logs a severe level message.
      *
      * @param message The message to be logged.

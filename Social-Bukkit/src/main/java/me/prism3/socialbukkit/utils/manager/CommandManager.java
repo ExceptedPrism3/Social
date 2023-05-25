@@ -28,7 +28,7 @@ public final class CommandManager {
      * @param commandName the name of the command
      * @param executor    the executor for the command
      */
-    public static void registerCommand(String commandName, CommandExecutor executor) {
+    public static void registerCommand(final String commandName, final CommandExecutor executor) {
 
         final PluginCommand command = getCommand(commandName);
 
@@ -46,16 +46,18 @@ public final class CommandManager {
      * @param name the name of the command
      * @return the PluginCommand with the given name, or null if not found
      */
-    private static PluginCommand getCommand(String name) {
+    private static PluginCommand getCommand(final String name) {
 
         PluginCommand command = null;
 
         try {
+
             final Constructor<PluginCommand> constructor = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
+
             constructor.setAccessible(true);
             command = constructor.newInstance(name, main);
 
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+        } catch (final NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
 
             Log.severe("Failed to create PluginCommand: " + name +"\n" +
                     "If the issue persists contact the Author", e);

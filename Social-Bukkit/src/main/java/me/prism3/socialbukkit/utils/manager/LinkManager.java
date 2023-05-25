@@ -2,6 +2,7 @@ package me.prism3.socialbukkit.utils.manager;
 
 import me.prism3.socialbukkit.Main;
 import me.prism3.socialbukkit.utils.Links;
+import me.prism3.socialbukkit.utils.Log;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 
@@ -34,14 +35,18 @@ public class LinkManager {
         final ConfigurationSection linksSection = this.main.getConfig().getConfigurationSection("Links");
 
         // No "Links" section found, return
-        if (linksSection == null)
+        if (linksSection == null) {
+
+            Log.warn("No social links found in the Links section, skipping...");
             return;
+        }
 
         // Map to store the link configurations
         final Map<String, Map<String, Object>> linksConfig = new HashMap<>();
 
         // Iterate through the keys in the "Links" section
         for (String key : linksSection.getKeys(false)) {
+
             Object value = linksSection.get(key);
 
             // If the value is a map, store it as a link configuration

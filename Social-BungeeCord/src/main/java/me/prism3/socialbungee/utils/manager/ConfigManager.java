@@ -6,47 +6,68 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.nio.file.StandardCopyOption;
 
 
+/**
+ * The ConfigManager class is responsible for managing the configuration file of the plugin.
+ * It provides methods to initialize, retrieve values, and access the plugin's configuration.
+ */
 public class ConfigManager {
 
     private Configuration config = null;
 
+    /**
+     * Initializes the ConfigManager by saving the default configuration file and loading the configuration.
+     */
     public void init() {
 
         this.saveDefaultConfig();
 
         try {
 
-            this.config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(this.getFile());
+            final File configFile = this.getFile();
+            this.config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(configFile);
 
         } catch (final IOException e) { e.printStackTrace(); }
     }
 
+    /**
+     * Retrieves a string value from the configuration based on the provided key.
+     * If the value is not found, the defaultValue is returned.
+     *
+     * @param key          The key to retrieve the string value.
+     * @param defaultValue The default value to return if the key is not found.
+     * @return The retrieved string value, or the defaultValue if the key is not found.
+     */
     public String getString(final String key, final String defaultValue) {
+
         final String str = this.config.getString(key);
+
         return str != null ? ChatColor.translateAlternateColorCodes('&', str) : defaultValue;
     }
 
-    public boolean getBoolean(final String key) { return this.config.getBoolean(key); }
-
-    public List<String> getStringList(final String key) {
-
-        final List<String> list = this.config.getStringList(key);
-
-        return list.stream()
-                .map(str -> ChatColor.translateAlternateColorCodes('&', str))
-                .collect(Collectors.toList());
-    }
-
-    public File getFile() { return new File(Main.getInstance().getDataFolder(), "config - Bungee.yml"); }
-
+    /**
+     * Retrieves the plugin's configuration.
+     *
+     * @return The plugin's configuration.
+     */
     public Configuration getConfiguration() { return this.config; }
 
+    /**
+     * Retrieves the file object representing the configuration file.
+     *
+     * @return The file object representing the configuration file.
+     */
+    private File getFile() { return new File(Main.getInstance().getDataFolder(), "config - Bungee.yml"); }
+
+    /**
+     * Saves the default configuration file if it does not exist.
+     */
     private void saveDefaultConfig() {
 
         Main.getInstance().getDataFolder().mkdirs();
@@ -55,13 +76,9 @@ public class ConfigManager {
 
         if (!configFile.exists()) {
 
-            try (final InputStream is = Main.getInstance().getResourceAsStream("config - Bungee.yml");
-                 final OutputStream os = Files.newOutputStream(configFile.toPath())) {
+            try (final InputStream is = Main.getInstance().getResourceAsStream("config - Bungee.yml")) {
 
-                final byte[] buffer = new byte[is.available()];
-
-                is.read(buffer);
-                os.write(buffer);
+                Files.copy(is, configFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
             } catch (final IOException e) { e.printStackTrace(); }
         }
