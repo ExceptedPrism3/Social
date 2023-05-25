@@ -9,22 +9,23 @@
 
 A Plugin that supports multiple server versions (Bukkit, BungeCord, WaterFall, Velocity, etc...)
 
-This plugin can be found on [Spigot](https://www.spigotmc.org/resources/logger.93562) & [MC-Market](https://www.mc-market.org/resources/20400/) & [Hyatlas](https://hyatlas.com/shop/social.28).
+This plugin can be found on [Spigot](https://www.spigotmc.org/resources/logger.93562) & [MC-Market](https://www.mc-market.org/resources/20400/).
 
 If support is needed or a suggesting that needs to be implemented, feel free to ask on the **[Discord](https://discord.gg/MfR5mcpVfX)**.
 
-# About the Plugin
+## About the Plugin
 Social media corners for your Server, with some cool features.
 
 ### It offers some commands like
 
-- /Facebook
-- /Discord
-- /Youtube
-- /Twitch
-- /Instagram
-- /Store
-- /Website
+- /facebook
+- /discord
+- /youtube
+- /twitch
+- /instagram
+- /store
+- /website
+- and more...
 
 ### The plugin can be installed across multiple server versions.
 Such as:

@@ -1,101 +1,73 @@
 package me.prism3.socialbungee.utils;
 
 import me.prism3.socialbungee.Main;
-import me.prism3.socialbungee.commands.*;
+import me.prism3.socialbungee.commands.OnSocial;
+import me.prism3.socialbungee.commands.SubOnes;
+import me.prism3.socialbungee.utils.manager.CommandManager;
+import me.prism3.socialbungee.utils.manager.LinkManager;
 
 import java.util.List;
 
 public class Data {
 
-    private final Main main = Main.getInstance();
+    private static final Main main = Main.getInstance();
 
+    private static final String PREFIX_KEY = "Messages.Prefix";
+    private static final String MESSAGE_NOT_AVAILABLE_KEY = "Messages.Not-Available";
+    private static final String MESSAGE_RELOAD_KEY = "Messages.Reload";
+    private static final String MESSAGE_NO_PERMISSION_KEY = "Messages.No-Permission";
+    private static final String MESSAGE_INVALID_SYNTAX_KEY = "Messages.Invalid-Syntax";
+
+    private static List<Links> links;
+
+    public static String pluginPrefix;
     public static String messageNotAvailable;
     public static String messageReload;
     public static String messageNoPermission;
     public static String invalidSyntax;
-    public static String discordLink;
-    public static String facebookLink;
-    public static String instagramLink;
-    public static String storeLink;
-    public static String twitchLink;
-    public static String websiteLink;
-    public static String youtubeLink;
+    public static String pluginVersion;
 
-    public static boolean isDiscord;
-    public static boolean isFacebook;
-    public static boolean isInstagram;
-    public static boolean isStore;
-    public static boolean isTwitch;
-    public static boolean isWebsite;
-    public static boolean isYoutube;
+    public static String socialUsePermission;
+    public static String socialReloadPermission;
 
-    public static List<String> helpMessages;
+    private Data() {}
 
-    public static String socialProxyReload;
+    public static void initialize() {
 
-    public void initializeStrings() {
+        initializeStrings();
+        initializePermission();
 
-        messageNotAvailable = main.getConfig().getString("Messages.Not-Available").replaceAll("&", "§");
-        messageReload = main.getConfig().getString("Messages.Reload").replaceAll("&", "§");
-        messageNoPermission = main.getConfig().getString("Messages.No-Permission");
-        invalidSyntax = main.getConfig().getString("Messages.Invalid-Syntax");
-        discordLink = main.getConfig().getString("Links.Discord").replaceAll("&", "§");
-        facebookLink = main.getConfig().getString("Links.Facebook").replaceAll("&", "§");
-        instagramLink = main.getConfig().getString("Links.Instagram").replaceAll("&", "§");
-        storeLink = main.getConfig().getString("Links.Store").replaceAll("&", "§");
-        twitchLink = main.getConfig().getString("Links.Twitch").replaceAll("&", "§");
-        websiteLink = main.getConfig().getString("Links.Website").replaceAll("&", "§");
-        youtubeLink = main.getConfig().getString("Links.Youtube").replaceAll("&", "§");
+        final LinkManager linkManager = new LinkManager(main);
+        links = linkManager.getLinks();
 
+        commandInitializer();
     }
 
-    public void initializeBooleans() {
+    private static void initializeStrings() {
 
-        isDiscord = main.getConfig().getBoolean("Social.Discord");
-        isFacebook = main.getConfig().getBoolean("Social.Facebook");
-        isInstagram = main.getConfig().getBoolean("Social.Instagram");
-        isStore = main.getConfig().getBoolean("Social.Store");
-        isTwitch = main.getConfig().getBoolean("Social.Twitch");
-        isWebsite = main.getConfig().getBoolean("Social.Website");
-        isYoutube = main.getConfig().getBoolean("Social.Youtube");
-
+        pluginPrefix = getConfigSection(PREFIX_KEY);
+        messageNotAvailable = getConfigSection(MESSAGE_NOT_AVAILABLE_KEY).replaceAll("&", "§");
+        messageReload = getConfigSection(MESSAGE_RELOAD_KEY).replaceAll("&", "§");
+        messageNoPermission = getConfigSection(MESSAGE_NO_PERMISSION_KEY).replaceAll("&", "§");
+        invalidSyntax = getConfigSection(MESSAGE_INVALID_SYNTAX_KEY).replaceAll("&", "§");
+        pluginVersion = main.getDescription().getVersion();
     }
 
-    public void initializeListOfStrings() {
+    private static void initializePermission() {
 
-        helpMessages = main.getConfig().getStringList("Messages.Social-Help");
-
+        socialUsePermission = "socialproxy.use";
+        socialReloadPermission = "socialproxy.reload";
     }
 
-    public void initializePermissionStrings() {
+    private static void commandInitializer() {
 
-        socialProxyReload = "socialproxy.reload";
+        main.getProxy().getPluginManager().registerCommand(main, new OnSocial());
 
+        for (Links link : links) {
+            String commandName = link.getHeader().toLowerCase();
+            CommandManager.registerCommand(commandName, new SubOnes(link));
+        }
     }
 
-    public void commandInitializer() {
-
-        this.main.getProxy().getPluginManager().registerCommand(this.main, new OnSocial());
-
-        if (this.main.getConfig().getBoolean("Social.Website"))
-            this.main.getProxy().getPluginManager().registerCommand(this.main, new OnWebsite());
-
-        if (this.main.getConfig().getBoolean("Social.Youtube"))
-            this.main.getProxy().getPluginManager().registerCommand(this.main, new OnYoutube());
-
-        if (this.main.getConfig().getBoolean("Social.Facebook"))
-            this.main.getProxy().getPluginManager().registerCommand(this.main, new OnFacebook());
-
-        if (this.main.getConfig().getBoolean("Social.Twitch"))
-            this.main.getProxy().getPluginManager().registerCommand(this.main, new OnTwitch());
-
-        if (this.main.getConfig().getBoolean("Social.Discord"))
-            this.main.getProxy().getPluginManager().registerCommand(this.main, new OnDiscord());
-
-        if (this.main.getConfig().getBoolean("Social.Instagram"))
-            this.main.getProxy().getPluginManager().registerCommand(this.main, new OnInstagram());
-
-        if (this.main.getConfig().getBoolean("Social.Store"))
-            this.main.getProxy().getPluginManager().registerCommand(this.main, new OnStore());
-    }
+    private static String getConfigSection(final String key) { return main.getConfig().getString(key, ""); }
 }

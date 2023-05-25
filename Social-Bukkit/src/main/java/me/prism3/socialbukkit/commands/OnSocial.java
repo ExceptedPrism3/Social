@@ -2,6 +2,9 @@ package me.prism3.socialbukkit.commands;
 
 import me.prism3.socialbukkit.Main;
 import me.prism3.socialbukkit.utils.Data;
+import me.prism3.socialbukkit.utils.HeadSkins;
+import me.prism3.socialbukkit.utils.Links;
+import me.prism3.socialbukkit.utils.Log;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,215 +17,137 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static me.prism3.socialbukkit.utils.Data.*;
-import static me.prism3.socialbukkit.utils.HeadSkins.*;
 
+
+/**
+ * OnSocial is a command executor for the "/social" command.
+ * It handles various subcommands and actions related to the social menu.
+ */
 public class OnSocial implements CommandExecutor {
 
     private final Main main = Main.getInstance();
+    private final Map<String, ItemStack> headSkinsCache = new HashMap<>();
 
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    /**
+     * Executes the "/social" command.
+     *
+     * @param sender  the CommandSender executing the command
+     * @param command the CommandManager instance
+     * @param label   the command label
+     * @param args    the command arguments
+     * @return true if the command was executed successfully, false otherwise
+     */
+    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
 
-        if (args.length != 0 && !args[0].equalsIgnoreCase("Reload")) {
+        if (args.length > 0 && !args[0].equalsIgnoreCase("Reload")) {
 
-            sender.sendMessage(messageInvalidSyntax);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messageInvalidSyntax)); // Send a message indicating invalid syntax
+
             return false;
 
-        }
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("Reload")) {
 
-        else if (args.length == 1 && args[0].equalsIgnoreCase("Reload")) {
+            if (sender.hasPermission(socialReloadPermission)) { // Check if the sender has the required permission
 
-            if (sender.hasPermission(socialReload)) {
+                this.main.reloadConfig(); // Reload the plugin's configuration
+                Data.initialize(); // Re-initialize the data
 
-                this.main.reloadConfig();
-                this.main.initializeData(new Data());
-                sender.sendMessage(messageReload);
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messageReload)); // Send a message indicating successful reload
+                return true;
+            } else {
 
-            } else sender.sendMessage(messageNoPermission);
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messageNoPermission)); // Send a message indicating no permission
+                return false;
+            }
 
         } else if (args.length > 1 && args[0].equalsIgnoreCase("Reload")) {
 
-            sender.sendMessage(messageInvalidSyntax);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messageInvalidSyntax)); // Send a message indicating invalid syntax
+            return false;
+        }
 
-        } else if (!isMenu) {
+        if (sender instanceof Player) {
 
-            if (sender instanceof Player && sender.hasPermission(socialUse)) {
+            if (!isMenu) {
 
                 final Player player = (Player) sender;
 
-                final Inventory gui = Bukkit.createInventory(player, menuSize, socialTitle);
+                if (!player.hasPermission(socialUsePermission)) {
 
-                // Icons Declaration
-                final ItemStack website = WebsiteSkin();
-                final ItemStack youtube = YoutubeSkin();
-                final ItemStack facebook = FacebookSkin();
-                final ItemStack twitch = TwitchSkin();
-                final ItemStack discord = DiscordSkin();
-                final ItemStack instagram = InstagramSkin();
-                final ItemStack store = StoreSkin();
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messageNoPermission));
+                    return false;
+                }
+
+                final Inventory gui = Bukkit.createInventory(player, menuSize, ChatColor.translateAlternateColorCodes('&', socialTitle)); // Create a new inventory GUI
+
+                for (Links socialIcon : getLinks()) {
+
+                    final String header = socialIcon.getHeader();
+
+                    ItemStack itemStack = headSkinsCache.get(header);
+
+                    if (itemStack == null) {
+                        itemStack = HeadSkins.getHeadSkins().get(header);
+
+                        if (itemStack != null) {
+                            headSkinsCache.put(header, itemStack);
+                        }
+                    }
+
+                    if (itemStack == null)
+                        continue;
+
+                    final ItemMeta itemMeta = itemStack.getItemMeta();
+                    itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', socialIcon.getDisplayName())); // Set the display name of the item
+
+                    final ArrayList<String> itemStackLore = new ArrayList<>();
+
+                    if (!socialIcon.isDisabled()) {
+
+                        itemStackLore.add(ChatColor.translateAlternateColorCodes('&', messageAvailable)); // Add lore indicating the socialIcon is available
+                    } else {
+
+                        itemStackLore.add(ChatColor.translateAlternateColorCodes('&', messageNotAvailable)); // Add lore indicating the socialIcon is not available
+                    }
+
+                    itemMeta.setLore(itemStackLore);
+                    itemStack.setItemMeta(itemMeta);
+
+                    gui.setItem(socialIcon.getSlot(), itemStack); // Set the item in the GUI at the corresponding slot
+                }
+
                 final ItemStack close = new ItemStack(Material.BARRIER);
 
-                // Website Icon
-                final ItemMeta websiteMeta = website.getItemMeta();
-                websiteMeta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Website");
-                final ArrayList<String> websiteLore = new ArrayList<>();
-
-                if (!isWebsite) {
-
-                    websiteLore.add(ChatColor.RED + messageAvailable);
-
-                } else {
-
-                    websiteLore.add(ChatColor.RED + messageNotAvailable);
-
-                }
-
-                websiteMeta.setLore(websiteLore);
-                website.setItemMeta(websiteMeta);
-
-                // Youtube Icon
-                final ItemMeta youtubeMeta = youtube.getItemMeta();
-                youtubeMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Youtube");
-                final ArrayList<String> youtubeLore = new ArrayList<>();
-
-                if (!isYoutube) {
-
-                    youtubeLore.add(ChatColor.RED + messageAvailable);
-
-                } else {
-
-                    youtubeLore.add(ChatColor.RED + messageNotAvailable);
-
-                }
-
-                youtubeMeta.setLore(youtubeLore);
-                youtube.setItemMeta(youtubeMeta);
-
-                // Facebook Icon
-                final ItemMeta facebookMeta = facebook.getItemMeta();
-                facebookMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Facebook");
-                final ArrayList<String> facebookLore = new ArrayList<>();
-
-                if (!isFacebook) {
-
-                    facebookLore.add(ChatColor.RED + messageAvailable);
-
-                } else {
-
-                    facebookLore.add(ChatColor.RED + messageNotAvailable);
-
-                }
-
-                facebookMeta.setLore(facebookLore);
-                facebook.setItemMeta(facebookMeta);
-
-                // Twitch Icon
-                final ItemMeta twitchMeta = twitch.getItemMeta();
-                twitchMeta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Twitch");
-                final ArrayList<String> twitchLore = new ArrayList<>();
-
-                if (!isTwitch) {
-
-                    twitchLore.add(ChatColor.RED + messageAvailable);
-
-                } else {
-
-                    twitchLore.add(ChatColor.RED + messageNotAvailable);
-
-                }
-
-                twitchMeta.setLore(twitchLore);
-                twitch.setItemMeta(twitchMeta);
-
-                // Discord Icon
-                final ItemMeta discordMeta = discord.getItemMeta();
-                discordMeta.setDisplayName(ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "Discord");
-                final ArrayList<String> discordLore = new ArrayList<>();
-
-                if (!isDiscord) {
-
-                    discordLore.add(ChatColor.RED + messageAvailable);
-
-                } else {
-
-                    discordLore.add(ChatColor.RED + messageNotAvailable);
-
-                }
-
-                discordMeta.setLore(discordLore);
-                discord.setItemMeta(discordMeta);
-
-                // Instagram Icon
-                final ItemMeta instagramMeta = instagram.getItemMeta();
-                instagramMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Instagram");
-                final ArrayList<String> instagramLore = new ArrayList<>();
-
-                if (!isInstagram) {
-
-                    instagramLore.add(ChatColor.RED + messageAvailable);
-
-                } else {
-
-                    instagramLore.add(ChatColor.RED + messageNotAvailable);
-
-                }
-
-                instagramMeta.setLore(instagramLore);
-                instagram.setItemMeta(instagramMeta);
-
-                // Store Icon
-                final ItemMeta storeMeta = store.getItemMeta();
-                storeMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Store");
-                final ArrayList<String> storeLore = new ArrayList<>();
-
-                if (!isStore) {
-
-                    storeLore.add(ChatColor.RED + messageAvailable);
-
-                } else {
-
-                    storeLore.add(ChatColor.RED + messageNotAvailable);
-
-                }
-
-                storeMeta.setLore(storeLore);
-                store.setItemMeta(storeMeta);
-
-                // Close Icon
                 final ItemMeta closeMeta = close.getItemMeta();
-                closeMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Close");
+                closeMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Close"); // Set the display name of the close item
+
                 final ArrayList<String> closeLore = new ArrayList<>();
-                closeLore.add(ChatColor.GOLD + "Close the Menu.");
+                closeLore.add(ChatColor.GOLD + "Close the Menu."); // Add lore explaining the functionality of the close item
+
                 closeMeta.setLore(closeLore);
                 close.setItemMeta(closeMeta);
 
-                // Setting the Icons
-                gui.setItem(this.main.getConfig().getInt("Website.Slot"), website);
+                gui.setItem(this.main.getConfig().getInt("Social.Size") - 5, close); // Set the close item in the GUI
 
-                gui.setItem(this.main.getConfig().getInt("Youtube.Slot"), youtube);
+                player.openInventory(gui); // Open the GUI for the player
 
-                gui.setItem(this.main.getConfig().getInt("Facebook.Slot"), facebook);
+                return true;
 
-                gui.setItem(this.main.getConfig().getInt("Twitch.Slot"), twitch);
+            } else {
 
-                gui.setItem(this.main.getConfig().getInt("Discord.Slot"), discord);
-
-                gui.setItem(this.main.getConfig().getInt("Instagram.Slot"), instagram);
-
-                gui.setItem(this.main.getConfig().getInt("Store.Slot"), store);
-
-                gui.setItem(this.main.getConfig().getInt("Social.Size") - 5, close);
-
-                player.openInventory(gui);
-
-            } else this.main.getLogger().severe("Thank you for using the Social plugin. Version: " + ChatColor.GOLD + this.main.getDescription().getVersion());
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', featureDisabled)); // Send a message indicating the feature is disabled
+                return false;
+            }
 
         } else {
 
-            sender.sendMessage(featureDisabled);
-            return false;
+            Log.info("Thank you for using the Social plugin. Version: " + ChatColor.GOLD + pluginVersion); // Log a message indicating plugin usage
         }
-        return true;
+
+        return true; // Return true to indicate the command was executed successfully
     }
 }

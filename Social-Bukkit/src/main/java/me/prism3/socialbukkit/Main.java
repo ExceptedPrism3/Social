@@ -1,12 +1,13 @@
 package me.prism3.socialbukkit;
 
 import de.jeff_media.updatechecker.UpdateChecker;
-import me.prism3.socialbukkit.events.ClickEvent;
 import me.prism3.socialbukkit.utils.Data;
-import me.prism3.socialbukkit.utils.Metrics;
+import me.prism3.socialbukkit.utils.Log;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import static me.prism3.socialbukkit.utils.Data.resourceID;
+
 
 public class Main extends JavaPlugin {
 
@@ -19,9 +20,9 @@ public class Main extends JavaPlugin {
 
         this.saveDefaultConfig();
 
-        this.initializeData(new Data());
+        Log.setup(this.getLogger());
 
-        this.getServer().getPluginManager().registerEvents(new ClickEvent(), this);
+        Data.initialize();
 
         // bStats
         new Metrics(this, 11779);
@@ -33,20 +34,11 @@ public class Main extends JavaPlugin {
                 .setNotifyOpsOnJoin(true)
                 .checkNow();
 
-        this.getLogger().info("Plugin loaded!");
+        Log.info("Plugin loaded!");
     }
 
     @Override
-    public void onDisable() { this.getLogger().info("Plugin unloaded!"); }
-
-    public void initializeData(final Data data) {
-
-        data.initializeStrings();
-        data.initializeIntegers();
-        data.initializeBooleans();
-        data.initializePermissionStrings();
-        data.commandInitializer();
-    }
+    public void onDisable() { Log.info("Plugin unloaded!"); }
 
     public static Main getInstance() {
         return instance;

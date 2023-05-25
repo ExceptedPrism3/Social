@@ -5,7 +5,7 @@
     <parent>
         <artifactId>Social</artifactId>
         <groupId>me.prism3</groupId>
-        <version>1.2.3</version>
+        <version>1.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -58,17 +58,17 @@
         <dependency>
             <groupId>me.prism3</groupId>
             <artifactId>Social-Bukkit</artifactId>
-            <version>1.2.3</version>
+            <version>1.3</version>
         </dependency>
         <dependency>
             <groupId>me.prism3</groupId>
             <artifactId>Social-BungeeCord</artifactId>
-            <version>1.2.3</version>
+            <version>1.3</version>
         </dependency>
         <dependency>
             <groupId>me.prism3</groupId>
             <artifactId>Social-Velocity</artifactId>
-            <version>1.2.3</version>
+            <version>1.3</version>
         </dependency>
     </dependencies>
 </project>

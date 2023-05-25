@@ -2,6 +2,7 @@ package me.prism3.socialbungee.commands;
 
 import me.prism3.socialbungee.Main;
 import me.prism3.socialbungee.utils.Data;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Command;
@@ -17,24 +18,34 @@ public class OnSocial extends Command {
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(final CommandSender sender, final String[] args) {
 
-        if (sender.hasPermission(socialProxyReload)) {
+        if (args.length > 0 && !args[0].equalsIgnoreCase("Reload")) {
 
-            if (args.length == 0 || (args.length == 1 && args[0].equalsIgnoreCase("help"))) {
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', invalidSyntax))); // Send a message indicating invalid syntax
 
-                final StringBuilder sm = new StringBuilder();
-                for (String line : helpMessages) sm.append(line).append('\n');
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("Reload")) {
 
-                sender.sendMessage(new TextComponent(sm.toString()));
-
-            } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+            // Check if the sender has the required permission
+            if (sender.hasPermission(socialReloadPermission)) {
 
                 this.main.getConfig().init();
-                this.main.initializeData(new Data());
+                Data.initialize();
                 sender.sendMessage(new TextComponent(messageReload));
 
-            } else sender.sendMessage(new TextComponent(invalidSyntax));
-        } else sender.sendMessage(new TextComponent(messageNoPermission));
+            } else {
+
+                sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', messageNoPermission))); // Send a message indicating no permission
+            }
+
+        } else if (args.length > 1 && args[0].equalsIgnoreCase("Reload")) {
+
+            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', invalidSyntax))); // Send a message indicating invalid syntax
+
+        } else {
+
+            sender.sendMessage(new TextComponent("Thank you for using the Social plugin. Version: " + ChatColor.GOLD + pluginVersion)); // Log a message indicating plugin usage
+
+        }
     }
 }

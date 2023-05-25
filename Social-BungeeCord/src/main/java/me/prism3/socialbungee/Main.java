@@ -1,11 +1,13 @@
 package me.prism3.socialbungee;
 
-import me.prism3.socialbungee.utils.ConfigManager;
+import me.prism3.socialbungee.utils.manager.ConfigManager;
 import me.prism3.socialbungee.utils.Data;
-import me.prism3.socialbungee.utils.Metrics;
+import me.prism3.socialbungee.utils.Log;
 import me.prism3.socialbungee.utils.UpdateChecker;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.plugin.Plugin;
+import org.bstats.bungeecord.Metrics;
+
 
 public final class Main extends Plugin {
 
@@ -18,10 +20,12 @@ public final class Main extends Plugin {
 
         instance = this;
 
+        Log.setup(this.getLogger());
+
         this.config = new ConfigManager();
         this.config.init();
 
-        this.initializeData(new Data());
+        Data.initialize();
 
         // bStats
         new Metrics(this, 11779);
@@ -31,30 +35,20 @@ public final class Main extends Plugin {
 
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
 
-                this.getLogger().info(ChatColor.GREEN + "Plugin is up to date!");
+                Log.info(ChatColor.GREEN + "Plugin is up to date!");
 
             } else {
 
-                this.getLogger().info(ChatColor.GOLD + "Plugin has a new Update! Current version " + ChatColor.RED + version + ChatColor.GOLD + " and the newest " + ChatColor.GREEN + this.getDescription().getVersion());
+                Log.info(ChatColor.GOLD + "Plugin has a new Update! Current version " + ChatColor.RED + version + ChatColor.GOLD + " and the newest " + ChatColor.GREEN + this.getDescription().getVersion());
 
             }
         });
 
-        this.getLogger().info("Has been loaded!");
+        Log.info("Plugin loaded!");
     }
 
     @Override
-    public void onDisable() { this.getLogger().info("Has been unloaded!"); }
-
-    public void initializeData(Data data) {
-
-        data.initializeStrings();
-        data.initializeListOfStrings();
-        data.initializeBooleans();
-        data.initializePermissionStrings();
-        data.commandInitializer();
-
-    }
+    public void onDisable() { Log.info("Plugin unloaded!"); }
 
     public static Main getInstance() {
         return instance;

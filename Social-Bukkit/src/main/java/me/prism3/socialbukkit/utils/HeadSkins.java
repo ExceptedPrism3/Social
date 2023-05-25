@@ -3,27 +3,44 @@ package me.prism3.socialbukkit.utils;
 import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.inventory.ItemStack;
 
-import static me.prism3.socialbukkit.utils.Data.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class HeadSkins {
+import static me.prism3.socialbukkit.utils.Data.getLinks;
 
+
+/**
+ * HeadSkins is a utility class for obtaining head skins as ItemStacks.
+ * It uses the SkullCreator library to create ItemStacks from base64-encoded head links.
+ */
+public final class HeadSkins {
+
+    /**
+     * Private constructor to prevent instantiation of the utility class.
+     */
     private HeadSkins() {}
 
-    public static ItemStack WebsiteSkin() {
-        return SkullCreator.itemFromBase64(websiteSkin);
+    /**
+     * Retrieves a map of head skins as ItemStacks.
+     *
+     * @return a map containing head skins as ItemStacks, with the header as the key
+     */
+    public static Map<String, ItemStack> getHeadSkins() {
+
+        final Map<String, ItemStack> headSkins = new HashMap<>();
+
+        for (Links link : getLinks()) {
+
+            String headLink = link.getHeadLink();
+
+            if (!headLink.isEmpty()) {
+
+                ItemStack skullItem = SkullCreator.itemFromBase64(headLink); // Create an ItemStack from the base64-encoded head link
+
+                headSkins.put(link.getHeader(), skullItem); // Add the ItemStack to the map with the header as the key
+            }
+        }
+
+        return headSkins;
     }
-
-    public static ItemStack YoutubeSkin() {
-        return SkullCreator.itemFromBase64(youtubeSkin);
-    }
-
-    public static ItemStack FacebookSkin() { return SkullCreator.itemFromBase64(facebookSkin); }
-
-    public static ItemStack TwitchSkin() { return SkullCreator.itemFromBase64(twitchSkin); }
-
-    public static ItemStack DiscordSkin() { return SkullCreator.itemFromBase64(discordSkin); }
-
-    public static ItemStack InstagramSkin() { return SkullCreator.itemFromBase64(instagramSkin); }
-
-    public static ItemStack StoreSkin() { return SkullCreator.itemFromBase64(storeSkin); }
 }

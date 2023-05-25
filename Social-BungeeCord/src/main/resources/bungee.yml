@@ -1,7 +1,7 @@
 name: Social-BungeeCord
 version: '${project.version}'
 main: me.prism3.socialbungee.Main
-description: Social media corners for your Server.
+description: Social media corners for your server.
 author: Prism3
 website: prism3.me
 commands:

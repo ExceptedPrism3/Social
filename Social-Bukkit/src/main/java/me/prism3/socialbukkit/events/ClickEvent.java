@@ -1,125 +1,68 @@
 package me.prism3.socialbukkit.events;
 
+import me.prism3.socialbukkit.utils.Links;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 import static me.prism3.socialbukkit.utils.Data.*;
 
+
+/**
+ * ClickEvent class is responsible for checking the player inventory clicking and prevents any plugin item from bugging out.
+ */
 public class ClickEvent implements Listener {
 
-    @EventHandler
-    public void onClick(final InventoryClickEvent e) {
+    private final Map<String, Links> socialIconCache = new HashMap<>();
 
-        if (e.getClickedInventory() == null) return;
+    /**
+     * InventoryClickEvent event responsible for checking the clicks.
+     *
+     * @param event InventoryClickEvent
+     */
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onClick(final InventoryClickEvent event) {
 
-        if (e.getView().getTitle().equalsIgnoreCase(socialTitle)) {
+        if (event.getClickedInventory() == null) return;
 
-            e.setCancelled(true);
+        final String inventoryTitle = event.getView().getTitle();
+        final String userSetInventoryTitle = ChatColor.translateAlternateColorCodes('&', socialTitle);
 
-            final Player player = (Player) e.getWhoClicked();
+        if (inventoryTitle.equals(userSetInventoryTitle)) {
 
-            if (e.getCurrentItem() == null || !e.getCurrentItem().hasItemMeta()) return;
+            event.setCancelled(true);
 
-            final String displayName = Objects.requireNonNull(Objects.requireNonNull(e.getCurrentItem()).getItemMeta()).getDisplayName();
+            final Player player = (Player) event.getWhoClicked();
 
-            if (displayName.equals(ChatColor.WHITE + "" + ChatColor.BOLD + "Website")) {
+            if (event.getCurrentItem() == null || !event.getCurrentItem().hasItemMeta()) return;
 
-                if (!isWebsite) {
+            final String displayName = event.getCurrentItem().getItemMeta().getDisplayName();
 
-                    player.sendMessage(websiteLink);
+            Links socialIcon = socialIconCache.get(displayName);
 
-                } else {
-
-                    player.sendMessage(messageNotAvailable);
+            if (socialIcon == null) {
+                for (Links icon : getLinks()) {
+                    String translatedName = ChatColor.translateAlternateColorCodes('&', icon.getDisplayName());
+                    socialIconCache.put(translatedName, icon);
+                    if (displayName.equals(translatedName)) {
+                        socialIcon = icon;
+                        break;
+                    }
                 }
-                player.closeInventory();
             }
 
-            if (displayName.equals(ChatColor.RED + "" + ChatColor.BOLD + "Youtube")) {
-
-                if (!isYoutube) {
-
-                    player.sendMessage(youtubeLink);
-
-                } else {
-
-                    player.sendMessage(messageNotAvailable);
-                }
+            if (socialIcon != null) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', socialIcon.getUrl()));
+                player.closeInventory();
+            } else if (displayName.equals(ChatColor.RED + "" + ChatColor.BOLD + "Close")) {
                 player.closeInventory();
             }
-
-            if (displayName.equals(ChatColor.BLUE + "" + ChatColor.BOLD + "Facebook")) {
-
-                if (!isFacebook) {
-
-                    player.sendMessage(facebookLink);
-
-                } else {
-
-                    player.sendMessage(messageNotAvailable);
-                }
-                player.closeInventory();
-            }
-
-            if (displayName.equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Twitch")) {
-
-                if (!isTwitch) {
-
-                    player.sendMessage(twitchLink);
-
-                } else {
-
-                    player.sendMessage(messageNotAvailable);
-                }
-                player.closeInventory();
-            }
-
-            if (displayName.equals(ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "Discord")) {
-
-                if (!isDiscord) {
-
-                    player.sendMessage(discordLink);
-
-                } else {
-
-                    player.sendMessage(messageNotAvailable);
-                }
-                player.closeInventory();
-            }
-
-            if (displayName.equals(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Instagram")) {
-
-                if (!isInstagram) {
-
-                    player.sendMessage(instagramLink);
-
-                } else {
-
-                    player.sendMessage(messageNotAvailable);
-                }
-                player.closeInventory();
-            }
-
-            if (displayName.equals(ChatColor.GOLD + "" + ChatColor.BOLD + "Store")) {
-
-                if (!isStore) {
-
-                    player.sendMessage(storeLink);
-
-                } else {
-
-                    player.sendMessage(messageNotAvailable);
-                }
-                player.closeInventory();
-            }
-
-            if (displayName.equals(ChatColor.RED + "" + ChatColor.BOLD + "Close"))
-                player.closeInventory();
         }
     }
 }
