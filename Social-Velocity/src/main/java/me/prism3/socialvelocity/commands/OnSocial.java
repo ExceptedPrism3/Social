@@ -2,44 +2,80 @@ package me.prism3.socialvelocity.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
-import com.velocitypowered.api.proxy.Player;
-import me.prism3.socialvelocity.Main;
 import me.prism3.socialvelocity.utils.Data;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 
 import static me.prism3.socialvelocity.utils.Data.*;
 
+
+/**
+ * The OnSocial class is responsible for handling the "/social" command.
+ */
 public class OnSocial implements SimpleCommand {
 
-    private final Main main = Main.getInstance();
-
+    /**
+     * Executes the "/social" command.
+     *
+     * @param invocation the command invocation
+     */
     @Override
-    public void execute(Invocation invocation) {
+    public void execute(final Invocation invocation) {
 
         final CommandSource sender = invocation.source();
         final String[] args = invocation.arguments();
 
-        if (sender.hasPermission(socialProxyReload)) {
+        if (args.length > 0 && !args[0].equalsIgnoreCase("Reload")) {
 
-            if (args.length == 0 || (args.length == 1 && args[0].equalsIgnoreCase("help"))) {
+            // Invalid syntax
+            this.sendMessage(sender, invalidSyntax, invalidSyntaxColor);
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("Reload")) {
 
-                if (sender instanceof Player) {
+            // Reload command
+            // Check if the sender has the required permission
+            if (sender.hasPermission(socialProxyReloadPermission)) {
 
-                    final StringBuilder sm = new StringBuilder();
+                // Reload the plugin data
+                Data.initialize();
+                this.sendMessage(sender, messageReload, messageReloadColor);
+            } else {
 
-                    for (String line : helpMessages) sm.append(line).append('\n');
+                // No permission to reload
+                this.sendMessage(sender, messageNoPermission, messageNoPermissionColor);
+            }
+        } else if (args.length > 1 && args[0].equalsIgnoreCase("Reload")) {
 
-                    sender.sendMessage(Identity.nil(), Component.text(sm.toString()));
+            // Invalid syntax for reload command
+            this.sendMessage(sender, invalidSyntax, invalidSyntaxColor);
+        } else {
 
-                } else this.main.getLogger().info("Thank you for using the Social Plugin!");
-            } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+            // Default message
+            final String version = "1.3";
 
-                this.main.getConfig().reload();
-                this.main.initializeData(new Data());
-                sender.sendMessage(Identity.nil(), Component.text(messageReload));
+            final Component message = Component.text()
+                    .content("Thank you for using the Social plugin. Version: ")
+                    .append(Component.text(version).color(NamedTextColor.GREEN))
+                    .build();
 
-            } else sender.sendMessage(Identity.nil(), Component.text(invalidSyntax));
-        } else sender.sendMessage(Identity.nil(), Component.text(messageNoPermission));
+            sender.sendMessage(Identity.nil(), message);
+        }
+    }
+
+    /**
+     * Sends a message to the command sender.
+     *
+     * @param sender  the command sender
+     * @param message the message to send
+     */
+    private void sendMessage(final CommandSource sender, final String message, final String hexColor) {
+
+        final Component messageComponent = Component.text(message).color(TextColor.fromHexString(hexColor));
+        final Component pluginPrefixColored = Component.text(pluginPrefix).color(TextColor.fromHexString(pluginPrefixColor));
+
+        final Component finalMessage = Component.join(Component.empty(), pluginPrefixColored, messageComponent);
+
+        sender.sendMessage(Identity.nil(), finalMessage);
     }
 }

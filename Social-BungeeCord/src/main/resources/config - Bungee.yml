@@ -32,9 +32,9 @@ Links:
   Store:
     Link: "&6&lStore.com"
 
-
+# Plugin Messages
 Messages:
-  Prefix: "&9&lSocial &8&l|"
+  Prefix: "&9&lSocial &8&l| "
   No-Permission: "&cYou do not have permission to use this command!"
   Invalid-Syntax: "&cInvalid Syntax."
-  Reload: "&a&lSocial has been reloaded!"
+  Reload: "%prefix% &a&lSocial has been reloaded!"

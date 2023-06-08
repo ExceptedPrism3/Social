@@ -15,41 +15,40 @@
 # Discord Server: https://discord.gg/MfR5mcpVfX
 
 
-# Social Features
-Social:
-  Website: true
-  Youtube: true
-  Facebook: true
-  Twitch: true
-  Discord: true
-  Instagram: true
-  Store: true
-
-# Social Links
+# Social
 Links:
-  Website: "&f&lWebsite.com"
-  Youtube: "&c&lYoutube.com"
-  Facebook: "&b&lFacebook.com"
-  Twitch: "&5&lTwitch.com"
-  Discord: "&9&lDiscord.gg"
-  Instagram: "&d&lInstagram.com"
-  Store: "&6&lStore.com"
+  Website:
+    Link: "Website.com"
+    Color: "#FFFFFF"
+  Youtube:
+    Link: "Youtube.com"
+    Color: "#FF0000"
+  Facebook:
+    Link: "Facebook.com"
+    Color: "#0000FF"
+  Twitch:
+    Link: "Twitch.com"
+    Color: "#800080"
+  Discord:
+    Link: "Discord.gg"
+    Color: "#000080"
+  Instagram:
+    Link: "Instagram.com"
+    Color: "#FFC0CB"
+  Store:
+    Link: "Store.com"
+    Color: "#FFD700"
 
+
+# Plugin Messages
 Messages:
-  No-Permission: "&cYou do not have permission to use this command!"
-  Invalid-Syntax: "&cInvalid Syntax."
-  Reload: "&a&lSocial has been reloaded!"
-  Not-Available: "&cThis social media is currently unavailable."
-  Social-Help:
-    - '&8&m----+------------{&r &b&lSocialMedia &r&8&m}------------+----'
-    - ''
-    - '&b/website &7- Shows the Website Link.'
-    - '&b/youtube &7- Shows the Youtube Link.'
-    - '&b/facebook &7- Shows the Facebook Link.'
-    - '&b/twitch &7- Shows the Twitch Link.'
-    - '&b/discord &7- Shows the Discord Link.'
-    - '&b/instagram &7- Shows the Instagram Link.'
-    - '&b/store &7- Shows the Store Link.'
-    - '&b/reload &7- To reload the Plugin Config.'
-    - ''
-    - '&8&m----+------------------------------------------+----'
+  Prefix: "Social | "
+  No-Permission: "You do not have permission to use this command!"
+  Invalid-Syntax: "Invalid Syntax."
+  Reload: "been reloaded!"
+
+Colors:
+  Prefix: "#ADD8E6"
+  No-Permission: "#FF0000"
+  Invalid-Syntax: "#FF0000"
+  Reload: "#90EE90"

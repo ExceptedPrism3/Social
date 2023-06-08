@@ -5,6 +5,9 @@
 ![Issues](https://img.shields.io/github/issues/ExceptedPrism3/Social)
 [![Discord](https://img.shields.io/discord/850407951629287424)](https://discord.gg/MfR5mcpVfX)
 [![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
+![Issues](https://img.shields.io/github/issues/ExceptedPrism3/Social)
+[![Discord](https://img.shields.io/discord/850407951629287424?color=%235865F2&label=join%20our%20discord)](https://discord.gg/MfR5mcpVfX)
+[![](https://img.shields.io/github/license/ExceptedPrism3/Social.svg)](https://github.com/ExceptedPrism3/Logger/blob/master/LICENSE "License")
 
 
 A Plugin that supports multiple server versions (Bukkit, BungeCord, WaterFall, Velocity, etc...)
@@ -16,7 +19,7 @@ If support is needed or a suggesting that needs to be implemented, feel free to 
 ## About the Plugin
 Social media corners for your Server, with some cool features.
 
-### It offers some commands like
+### It offers custom commands like
 
 - /facebook
 - /discord

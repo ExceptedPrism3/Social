@@ -8,4 +8,4 @@ permissions:
   socialproxy.use:
     description: Allow to use the plugin commands.
   socialproxy.reload:
-    description: Allowsto reload the Plugin.
+    description: Allow to reload the Plugin.

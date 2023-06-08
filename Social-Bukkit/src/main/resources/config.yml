@@ -65,11 +65,11 @@ Links:
     Link: "&6&lStore.com"
     Slot: 31
 
-
+# Plugin Messages
 Messages:
-  Prefix: "&b&lSocial &8&l|"
+  Prefix: "&b&lSocial &8&l| "
   No-Permission: "&cYou do not have permission to run this command."
-  Reload-Message: "&aConfig Reloaded."
+  Reload: "%prefix% &aConfig Reloaded."
   Invalid-Syntax: "&cInvalid Syntax!"
   Available: "&aAvailable!"
   Not-Available: "&4Not available!"

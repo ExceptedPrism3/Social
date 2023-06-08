@@ -1,109 +1,129 @@
 package me.prism3.socialvelocity.utils;
 
 import me.prism3.socialvelocity.Main;
-import me.prism3.socialvelocity.commands.*;
+import me.prism3.socialvelocity.commands.OnSocial;
+import me.prism3.socialvelocity.commands.SubOnes;
+import me.prism3.socialvelocity.utils.manager.CommandManager;
+import me.prism3.socialvelocity.utils.manager.LinkManager;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
+
+/**
+ * The Data class is responsible for initializing various configuration settings, permissions, commands, and events for the plugin.
+ * This class stores static fields that can be accessed by other classes throughout the plugin.
+ */
 public class Data {
 
-    private final Main main = Main.getInstance();
+    private static final Main main = Main.getInstance();
 
-    public static String messageNotAvailable;
+    private static final String PREFIX_KEY = "Messages.Prefix";
+    private static final String MESSAGE_RELOAD_KEY = "Messages.Reload";
+    private static final String MESSAGE_NO_PERMISSION_KEY = "Messages.No-Permission";
+    private static final String MESSAGE_INVALID_SYNTAX_KEY = "Messages.Invalid-Syntax";
+
+    // Color Side
+    private static final String COLOR_PREFIX_KEY = "Colors.Prefix";
+    private static final String COLOR_MESSAGE_RELOAD_KEY = "Colors.Reload";
+    private static final String COLOR_NO_PERMISSION_KEY = "Colors.No-Permission";
+    private static final String COLOR_INVALID_SYNTAX_KEY = "Colors.Invalid-Syntax";
+
+    private static List<Links> links;
+
+    public static String pluginPrefix;
     public static String messageReload;
     public static String messageNoPermission;
     public static String invalidSyntax;
-    public static String discordLink;
-    public static String facebookLink;
-    public static String instagramLink;
-    public static String storeLink;
-    public static String twitchLink;
-    public static String websiteLink;
-    public static String youtubeLink;
+    public static String pluginPrefixColor;
+    public static String messageReloadColor;
+    public static String messageNoPermissionColor;
+    public static String invalidSyntaxColor;
 
-    public static int bStats;
+    public static String socialProxyUsePermission;
+    public static String socialProxyReloadPermission;
 
-    public static boolean isDiscord;
-    public static boolean isFacebook;
-    public static boolean isInstagram;
-    public static boolean isStore;
-    public static boolean isTwitch;
-    public static boolean isWebsite;
-    public static boolean isYoutube;
+    private Data() {}
 
-    public static List<String> helpMessages;
+    /**
+     * Initializes the Data class by initializing strings, permissions, and commands.
+     */
+    public static void initialize() {
 
-    public static String socialProxyReload;
+        initializeStrings();
+        initializePermissionStrings();
 
-    public void initializeStrings() {
+        final LinkManager linkManager = new LinkManager();
+        links = linkManager.getLinks();
 
-        messageNotAvailable = main.getConfig().getString("Messages.Not-Available").replaceAll("&", "§");
-        messageReload = main.getConfig().getString("Messages.Reload").replaceAll("&", "§");
-        messageNoPermission = main.getConfig().getString("Messages.No-Permission");
-        invalidSyntax = main.getConfig().getString("Messages.Invalid-Syntax");
-        discordLink = main.getConfig().getString("Links.Discord").replaceAll("&", "§");
-        facebookLink = main.getConfig().getString("Links.Facebook").replaceAll("&", "§");
-        instagramLink = main.getConfig().getString("Links.Instagram").replaceAll("&", "§");
-        storeLink = main.getConfig().getString("Links.Store").replaceAll("&", "§");
-        twitchLink = main.getConfig().getString("Links.Twitch").replaceAll("&", "§");
-        websiteLink = main.getConfig().getString("Links.Website").replaceAll("&", "§");
-        youtubeLink = main.getConfig().getString("Links.Youtube").replaceAll("&", "§");
-
+        initializeCommands();
     }
 
-    public void initializeIntegers() {
+    private static void initializeStrings() {
 
-        bStats = 11779;
+        pluginPrefix = getConfigValue(PREFIX_KEY);
+        messageReload = getConfigValue(MESSAGE_RELOAD_KEY);
+        messageNoPermission = getConfigValue(MESSAGE_NO_PERMISSION_KEY);
+        invalidSyntax = getConfigValue(MESSAGE_INVALID_SYNTAX_KEY);
 
+        // Color side
+        pluginPrefixColor = getHexStringConf(COLOR_PREFIX_KEY);
+        messageReloadColor = getHexStringConf(COLOR_MESSAGE_RELOAD_KEY);
+        messageNoPermissionColor = getHexStringConf(COLOR_NO_PERMISSION_KEY);
+        invalidSyntaxColor = getHexStringConf(COLOR_INVALID_SYNTAX_KEY);
     }
 
-    public void initializeBooleans() {
+    private static void initializePermissionStrings() {
 
-        isDiscord = main.getConfig().getBoolean("Social.Discord");
-        isFacebook = main.getConfig().getBoolean("Social.Facebook");
-        isInstagram = main.getConfig().getBoolean("Social.Instagram");
-        isStore = main.getConfig().getBoolean("Social.Store");
-        isTwitch = main.getConfig().getBoolean("Social.Twitch");
-        isWebsite = main.getConfig().getBoolean("Social.Website");
-        isYoutube = main.getConfig().getBoolean("Social.Youtube");
-
+        socialProxyUsePermission = "socialproxy.use";
+        socialProxyReloadPermission = "socialproxy.reload";
     }
 
-    public void initializeListOfStrings() {
+    private static void initializeCommands() {
 
-        helpMessages = main.getConfig().getStringList("Messages.Social-Help");
+        main.getServer().getCommandManager().register("social", new OnSocial());
 
+        for (Links link : links)
+            CommandManager.registerCommand(link.getHeader(), new SubOnes(link));
     }
 
-    public void initializePermissionStrings() {
+    /**
+     * Retrieves the hex color string value associated with the given key.
+     *
+     * @param key          the key to retrieve the value for
+     * @return the hex color value from the configuration, or white string if not found
+     */
+    private static String getHexStringConf(final String key) { return main.getConfig().getString(key, "#FFFFFF"); }
 
-        socialProxyReload = "socialproxy.reload";
+    public static String getConfigValue(final String path) {
 
-    }
+        try (final FileReader fileReader = new FileReader(main.getConfig().getConfigFile())) {
 
-    public void commandInitializer() {
+            final Yaml yaml = new Yaml();
+            final Map<String, Object> config = yaml.load(fileReader);
 
-        this.main.getServer().getCommandManager().register("social", new OnSocial());
+            // Traverse the nested keys to retrieve the value
+            final String[] keys = path.split("\\.");
+            Object value = config;
 
-        if (this.main.getConfig().getBoolean("Social.Website"))
-            this.main.getServer().getCommandManager().register("website", new OnWebsite());
+            for (String key : keys) {
 
-        if (this.main.getConfig().getBoolean("Social.Youtube"))
-            this.main.getServer().getCommandManager().register("youtube", new OnYoutube(), "yt");
+                if (value instanceof Map) {
+                    value = ((Map<?, ?>) value).get(key);
+                } else {
+                    value = null;
+                    break;
+                }
+            }
 
-        if (this.main.getConfig().getBoolean("Social.Facebook"))
-            this.main.getServer().getCommandManager().register("facebook", new OnFacebook(), "fb");
+            if (value != null)
+                return value.toString();
 
-        if (this.main.getConfig().getBoolean("Social.Twitch"))
-            this.main.getServer().getCommandManager().register("twitch", new OnTwitch());
+        } catch (final IOException e) { e.printStackTrace(); }
 
-        if (this.main.getConfig().getBoolean("Social.Discord"))
-            this.main.getServer().getCommandManager().register("discord", new OnDiscord());
-
-        if (this.main.getConfig().getBoolean("Social.Instagram"))
-            this.main.getServer().getCommandManager().register("instagram", new OnInstagram());
-
-        if (this.main.getConfig().getBoolean("Social.Store"))
-            this.main.getServer().getCommandManager().register("store", new OnStore());
+        return ""; // Return the defaultValue if the value is not found or an error occurs
     }
 }

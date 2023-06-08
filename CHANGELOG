@@ -44,3 +44,12 @@ Fixes
 
 Changes
     [*] Code Improvements
+
+<-!------------------------------------------ v1.3 ------------------------------------------!->
+
+Additions
+    [+] 1.20 Support
+    [+] Now you can add unlimited amount of social links and each will have it's own command
+
+Changes
+    [*] Huge code improvements
